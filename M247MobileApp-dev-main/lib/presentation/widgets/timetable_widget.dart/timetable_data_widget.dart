@@ -101,10 +101,11 @@ class TimetableDataWidget extends StatelessWidget {
                         startTime: '${snapshot.jummah2} PM',
                         endTime: '${snapshot.jummah1} PM'),
                 endTime1: checkTheNumberOfJummuah(
+                  jummah1: snapshot.jummah1??'',
                     jummah2: snapshot.jummah2 ?? '',
                     jummah3: snapshot.jummah3 ?? '',
                     jummah4: snapshot.jummah4 ?? ''),
-                startTime: snapshot.jummah1,
+                startTime: '--',
               ),
             ],
           ),

@@ -107,19 +107,22 @@ List<DateTime> generate() {
  }
 
  String checkTheNumberOfJummuah({
-  
+  required String jummah1,
   required String jummah2,
   required String jummah3,
   required String jummah4,
 
  }){
   String emptyString ='';
-   if(jummah2!=emptyString){
-    return jummah2;
-   }else if(jummah2!=emptyString && jummah3!=emptyString){
-    return '$jummah2 / $jummah3';
-   }else if(jummah2!=emptyString && jummah3!=emptyString && jummah4!=emptyString){
-    return '$jummah2 / $jummah3 / $jummah4';
+   
+    if(jummah1!=emptyString && jummah2!=emptyString && jummah3!=emptyString && jummah4!=emptyString){
+    return '$jummah1 / $jummah2 / $jummah3 / $jummah4';
+   }else if(jummah1!=emptyString && jummah2!=emptyString && jummah3!=emptyString){
+    return '$jummah1 / $jummah2 / $jummah3';
+   }else if(jummah1!=emptyString && jummah2!=emptyString ){
+    return '$jummah1 / $jummah2';
+   }else if(jummah1!=emptyString){
+    return jummah1;
    }else{
     return '';
    }

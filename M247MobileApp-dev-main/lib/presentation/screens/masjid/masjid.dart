@@ -282,7 +282,7 @@ class Masjid extends StatelessWidget {
                               : Container(
                                   width: 0,
                                 ),
-                                SizedBox(width:masjid!.audioStream != null? 15.w:0.w),
+                                SizedBox(width:masjid!.audioStream != null? 12.w:0.w),
                           masjid!.youtube != null && masjid!.youtube!.isNotEmpty
                               ? SvgButton(
                                   icon: AssetConstants.video,
@@ -295,7 +295,7 @@ class Masjid extends StatelessWidget {
                                   },
                                 )
                               : Container(),
-                              SizedBox(width:  masjid!.youtube != null?15.w:0.w,),
+                              SizedBox(width:  masjid!.youtube != null?12.w:0.w,),
                           masjid!.transmitter != null &&
                                   masjid!.transmitter!.isNotEmpty
                               ? SvgTextButton(
