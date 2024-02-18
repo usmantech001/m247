@@ -5,9 +5,9 @@ import 'package:masjid/core/extension/datetime_extension.dart';
 class DateTimeWidget extends StatefulWidget {
   final DateTime dateTime;
   final PageController controller;
-  bool isFromHome;
+  final bool isFromHome;
   final void Function(DateTime date) onSelected;
-  DateTimeWidget({
+  const DateTimeWidget({
     super.key,
     required this.dateTime,
     required this.onSelected,
@@ -93,21 +93,19 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GestureDetector(
-                         onTap: () async {
-                         DateTime? date = await showDatePicker(
-                              context: context,
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(4030),
-                              
-                              );
-                              if(date!=null){
-                                 setState(() {
-                                now = date;
-                                widget.onSelected(now);
-
-                              });
-                              }
-                              
+                        onTap: () async {
+                          DateTime? date = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(4030),
+                            initialDate: DateTime.now(),
+                          );
+                          if (date != null) {
+                            setState(() {
+                              now = date;
+                              widget.onSelected(now);
+                            });
+                          }
                         },
                         child: Text(
                           now.formatted(),

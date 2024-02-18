@@ -34,5 +34,5 @@ class AssetConstants {
   static String clock = 'clock'.toSvg();
   static String masjid = 'masjid'.toSvg();
   static String defaults = 'default'.toSvg();
-  static String whatsappImg = 'assets/images/whatsapp.png';
+  static String whatsapp = 'whatsapp'.toSvg();
 }

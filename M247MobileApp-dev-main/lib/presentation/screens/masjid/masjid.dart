@@ -237,7 +237,10 @@ class Masjid extends StatelessWidget {
                                                         height: 17.0
                                                             .toFigmaHeight(22)),
                                                   ),
-                                                 Image.asset(AssetConstants.whatsappImg, height: 20, color: Colors.black,)
+                                                  SvgPicture.asset(
+                                                    AssetConstants.whatsapp,
+                                                    fit: BoxFit.scaleDown,
+                                                  ),
                                                 ],
                                               ),
                                             )
@@ -266,7 +269,7 @@ class Masjid extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: Row(
-                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           masjid!.audioStream != null
                               ? SvgButton(
@@ -282,7 +285,8 @@ class Masjid extends StatelessWidget {
                               : Container(
                                   width: 0,
                                 ),
-                                SizedBox(width:masjid!.audioStream != null? 12.w:0.w),
+                          SizedBox(
+                              width: masjid!.audioStream != null ? 15.w : 0.w),
                           masjid!.youtube != null && masjid!.youtube!.isNotEmpty
                               ? SvgButton(
                                   icon: AssetConstants.video,
@@ -295,7 +299,9 @@ class Masjid extends StatelessWidget {
                                   },
                                 )
                               : Container(),
-                              SizedBox(width:  masjid!.youtube != null?12.w:0.w,),
+                          SizedBox(
+                            width: masjid!.youtube != null ? 15.w : 0.w,
+                          ),
                           masjid!.transmitter != null &&
                                   masjid!.transmitter!.isNotEmpty
                               ? SvgTextButton(
@@ -335,7 +341,7 @@ class Masjid extends StatelessWidget {
                                   SizedBox(
                                     width: 140.w,
                                     child: Text(
-                                      "NAMAZ",
+                                      "SALAAH",
                                       style: TextStyle(
                                         fontFamily: 'SFPro',
                                         fontSize: 11.sp,
@@ -368,7 +374,7 @@ class Masjid extends StatelessWidget {
                                     child: Padding(
                                       padding: EdgeInsets.only(right: 20.w),
                                       child: Text(
-                                        "JAMMAT",
+                                        "JAMAT",
                                         style: TextStyle(
                                           fontFamily: 'SFPro',
                                           fontSize: 11.sp,
@@ -403,7 +409,8 @@ class Masjid extends StatelessWidget {
                                 },
                               ),
                             ),
-                            SizedBox(height: 19.h),
+
+                          /*  SizedBox(height: 19.h),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 40.w),
                               child: Center(
@@ -418,7 +425,8 @@ class Masjid extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ),
+                            ), */
+                             
                             //SizedBox(height: 100.h),
                           ],
                         ),

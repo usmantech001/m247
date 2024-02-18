@@ -37,7 +37,7 @@ dependencies:
   flutter_screenutil: null
 
 
-  cached_network_image: ^3.3.1 
+  cached_network_image: ^3.3.1
   shared_preferences: ^2.2.2
   get: 
   speech_to_text:

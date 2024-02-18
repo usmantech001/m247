@@ -7,6 +7,7 @@ import 'package:masjid/controllers/favorite_controller.dart';
 import 'package:masjid/presentation/logic/favorite_bloc/favorite_bloc.dart';
 import 'package:masjid/presentation/logic/jummah_bloc/jummah_bloc.dart';
 import 'package:masjid/presentation/logic/masjid_bloc/masjid_bloc.dart';
+import 'package:masjid/presentation/logic/timepicker_bloc.dart';
 import 'package:masjid/presentation/logic/timetable_bloc/timetable_bloc.dart';
 
 class MyApp extends StatelessWidget {
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
             BlocProvider<SpeechCubit>(create: (context) => SpeechCubit()),
             BlocProvider<FavoriteCubit>(create: (context) => FavoriteCubit()),
             BlocProvider<TimetableBloc>(create: (context) => TimetableBloc()),
+            BlocProvider<TimePickerBloc>(create: (context) => TimePickerBloc()),
           ],
           child: GetMaterialApp(
             title: "Masjid247",

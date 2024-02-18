@@ -5,9 +5,12 @@ import 'package:masjid/presentation/widgets/home_widgets/masjid_tile.dart';
 
 class HomeDataWidget extends StatelessWidget {
   final List<MasjidModel> data;
-  final PageController pageController;
-  const HomeDataWidget(
-      {super.key, required this.data, required this.pageController});
+  final PageController controller;
+  const HomeDataWidget({
+    super.key,
+    required this.data,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +21,7 @@ class HomeDataWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final snapshot = data[index];
-        return MasjidTile(
-          masjid: snapshot,
-          pageController: pageController,
-        );
+        return MasjidTile(masjid: snapshot, controller: controller);
       },
     );
   }

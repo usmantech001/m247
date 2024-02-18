@@ -36,6 +36,20 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
       child: Column(
         children: [
           _EventTile(
+            name: "Sunrise",
+            startAMPM: widget.snapshot.sunset!.isEmpty ? '' : am,
+            endAMPM: '',
+            selected: widget.snapshot.sunrise!.isEmpty ||
+                    widget.snapshot.sunset!.isEmpty
+                ? false
+                : checkPrayerTime(
+                    startTime: '${widget.snapshot.sunset} $am',
+                    endTime: '${widget.snapshot.sunrise} $am',
+                    pagecontroller: widget.pagecontroller),
+            endTime: '',
+            startTime: widget.snapshot.sunrise,
+          ),
+          _EventTile(
             startAMPM: widget.snapshot.begFajr!.isEmpty ? '' : am,
             endAMPM: widget.snapshot.jamFajr!.isEmpty ? '' : am,
             name: "Fajr",
@@ -49,34 +63,91 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             endTime: widget.snapshot.jamFajr,
             startTime: widget.snapshot.begFajr,
           ),
-          _EventTile(
-            name: "Sunrise",
-            startAMPM: widget.snapshot.sunset!.isEmpty ? '' : am,
-            endAMPM: widget.snapshot.sunrise!.isEmpty ? '' : am,
-            selected: widget.snapshot.sunrise!.isEmpty ||
-                    widget.snapshot.sunset!.isEmpty
-                ? false
-                : checkPrayerTime(
-                    startTime: '${widget.snapshot.sunset} $am',
-                    endTime: '${widget.snapshot.sunrise} $am',
-                    pagecontroller: widget.pagecontroller),
-            endTime: widget.snapshot.sunrise,
-            startTime: widget.snapshot.sunset,
-          ),
-          _EventTile(
-            name: "Dhuhr",
-            startAMPM: widget.snapshot.begDhuhr!.isEmpty ? '' : pm,
-            endAMPM: widget.snapshot.jamDhuhr!.isEmpty ? '' : pm,
-            selected: widget.snapshot.begDhuhr!.isEmpty ||
-                    widget.snapshot.jamDhuhr!.isEmpty
-                ? false
-                : checkPrayerTime(
-                    startTime: '${widget.snapshot.begDhuhr} $pm',
-                    endTime: '${widget.snapshot.jamDhuhr} $pm',
-                    pagecontroller: widget.pagecontroller),
-            endTime: widget.snapshot.jamDhuhr,
-            startTime: widget.snapshot.begDhuhr,
-          ),
+          checkIfTodayIsFridayAndJummuhIsNotEmpty(
+                      jummah: widget.snapshot.jummah1 ?? '') ==
+                  true
+              ? _EventTile(
+                  name: "Jummah 1",
+                  startAMPM: '',
+                  endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
+                  selected: widget.snapshot.jummah2!.isEmpty ||
+                          widget.snapshot.jummah2!.isEmpty
+                      ? false
+                      : checkPrayerTime(
+                          startTime: '${widget.snapshot.jummah1} $pm',
+                          endTime: '${widget.snapshot.jummah1} $pm',
+                          pagecontroller: widget.pagecontroller),
+                  endTime: widget.snapshot.jummah1,
+                  startTime: '',
+                )
+              : _EventTile(
+                  name: "Dhuhr",
+                  startAMPM: widget.snapshot.begDhuhr!.isEmpty ? '' : pm,
+                  endAMPM: widget.snapshot.jamDhuhr!.isEmpty ? '' : pm,
+                  selected: widget.snapshot.begDhuhr!.isEmpty ||
+                          widget.snapshot.jamDhuhr!.isEmpty
+                      ? false
+                      : checkPrayerTime(
+                          startTime: '${widget.snapshot.begDhuhr} $pm',
+                          endTime: '${widget.snapshot.jamDhuhr} $pm',
+                          pagecontroller: widget.pagecontroller),
+                  endTime: widget.snapshot.jamDhuhr,
+                  startTime: widget.snapshot.begDhuhr,
+                ),
+          checkIfTodayIsFridayAndJummuhIsNotEmpty(
+                      jummah: widget.snapshot.jummah2 ?? '') ==
+                  true
+              ? _EventTile(
+                  name: "Jummah 2",
+                  startAMPM: '',
+                  endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
+                  selected: widget.snapshot.jummah2!.isEmpty ||
+                          widget.snapshot.jummah2!.isEmpty
+                      ? false
+                      : checkPrayerTime(
+                          startTime: '${widget.snapshot.jummah1} $pm',
+                          endTime: '${widget.snapshot.jummah2} $pm',
+                          pagecontroller: widget.pagecontroller),
+                  endTime: widget.snapshot.jummah2,
+                  startTime: '',
+                )
+              : Container(),
+          checkIfTodayIsFridayAndJummuhIsNotEmpty(
+                      jummah: widget.snapshot.jummah3 ?? '') ==
+                  true
+              ? _EventTile(
+                  name: "Jummah 3",
+                  startAMPM: '',
+                  endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
+                  selected: widget.snapshot.jummah2!.isEmpty ||
+                          widget.snapshot.jummah2!.isEmpty
+                      ? false
+                      : checkPrayerTime(
+                          startTime: '${widget.snapshot.jummah2} $pm',
+                          endTime: '${widget.snapshot.jummah3} $pm',
+                          pagecontroller: widget.pagecontroller),
+                  endTime: widget.snapshot.jummah3,
+                  startTime: '',
+                )
+              : Container(),
+          checkIfTodayIsFridayAndJummuhIsNotEmpty(
+                      jummah: widget.snapshot.jummah4 ?? '') ==
+                  true
+              ? _EventTile(
+                  name: "Jummah 4",
+                  startAMPM: '',
+                  endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
+                  selected: widget.snapshot.jummah2!.isEmpty ||
+                          widget.snapshot.jummah2!.isEmpty
+                      ? false
+                      : checkPrayerTime(
+                          startTime: '${widget.snapshot.jummah3} $pm',
+                          endTime: '${widget.snapshot.jummah4} $pm',
+                          pagecontroller: widget.pagecontroller),
+                  endTime: widget.snapshot.jummah4,
+                  startTime: '',
+                )
+              : Container(),
           _EventTile(
             name: "Asr",
             startAMPM: widget.snapshot.begAsar!.isEmpty ? '' : pm,
@@ -93,7 +164,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
           ),
           _EventTile(
             name: "Maghrib",
-            startAMPM: widget.snapshot.sunset!.isEmpty ? '' : pm,
+            startAMPM: '',
             endAMPM: widget.snapshot.jamMaghrib!.isEmpty ? '' : pm,
             selected: widget.snapshot.sunset!.isEmpty ||
                     widget.snapshot.jamMaghrib!.isEmpty
@@ -103,7 +174,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                     endTime: '${widget.snapshot.jamMaghrib} $pm',
                     pagecontroller: widget.pagecontroller),
             endTime: widget.snapshot.jamMaghrib,
-            startTime: widget.snapshot.sunset,
+            startTime: '',
           ),
           _EventTile(
             name: "Isha",
@@ -120,19 +191,21 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             endTime: widget.snapshot.jamEsha,
             startTime: widget.snapshot.begEsha,
           ),
-          _EventTile(
-            name: "Jumma",
-            startAMPM: widget.snapshot.jummah1!.isEmpty ? '' : pm,
-            endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
-            selected: widget.snapshot.jummah2!.isEmpty ||
-                    widget.snapshot.jummah2!.isEmpty
-                ? false
-                : checkPrayerTime(
-                    startTime: '${widget.snapshot.jummah2} $pm',
-                    endTime: '${widget.snapshot.jummah1} $pm',
-                    pagecontroller: widget.pagecontroller),
-            endTime: widget.snapshot.jummah2,
-            startTime: widget.snapshot.jummah1,
+          SizedBox(height: 19.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40.w),
+            child: Center(
+              child: Text(
+                widget.snapshot.freeText ?? '',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontFamily: 'SF Pro',
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.greyTextColor,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -203,8 +276,8 @@ class _EventTile extends StatelessWidget {
                           ? AppColor.backgroundColor
                           : AppColor.brownColor,
                       fontWeight: FontWeight.w700,
-                      height: 22.0
-                          .toFigmaHeight(24), // here you use the extension
+                      height:
+                          22.0.toFigmaHeight(24), // here you use the extension
                     ),
                   ),
                   SizedBox(width: 5.w),
@@ -215,8 +288,8 @@ class _EventTile extends StatelessWidget {
                       fontSize: 11.sp,
                       color: AppColor.lightGreyColor3,
                       fontWeight: FontWeight.w700,
-                      height: 11.0
-                          .toFigmaHeight(20), // here you use the extension
+                      height:
+                          11.0.toFigmaHeight(20), // here you use the extension
                     ),
                   ),
                 ],

@@ -5,6 +5,7 @@ import 'package:masjid/controllers/favorite_controller.dart';
 import 'package:masjid/data/models/masjid_model.dart';
 import 'package:masjid/data/models/timetable_model.dart';
 import 'package:masjid/core/extension/string_extension.dart';
+import 'package:masjid/presentation/logic/timepicker_bloc.dart';
 import 'package:masjid/presentation/logic/timetable_bloc/timetable_bloc.dart';
 import 'package:masjid/presentation/logic/timetable_bloc/timetable_event.dart';
 import 'package:masjid/presentation/widgets/timetable_widget.dart/timetable_data_widget.dart';
@@ -12,23 +13,21 @@ import 'package:masjid/presentation/widgets/timetable_widget.dart/timetable_init
 
 class MasjidTile extends StatelessWidget {
   final MasjidModel? masjid;
-  final PageController pageController;
+  final PageController controller;
 
   const MasjidTile({
     super.key,
     this.masjid,
-    required this.pageController,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     final timetableBloc = BlocProvider.of<TimetableBloc>(context);
-    return BlocListener<HomeBloc, FutureState>(
+    return BlocListener<TimePickerBloc, DateTime?>(
       listener: (context, state) {
-        if (state is DATA) {
-          timetableBloc.add(
-            GetTimetableDateEvent(id: masjid!.id, date: state.data),
-          );
+        if (state != null) {
+          timetableBloc.add(GetTimetableDateEvent(id: masjid!.id, date: state));
         }
       },
       child: Padding(
@@ -49,7 +48,7 @@ class MasjidTile extends StatelessWidget {
                 //  go to masjid
                 Navigator.pushNamed(context, RouteGenerator.masjid, arguments: {
                   'masjidmodel': masjid,
-                  'pagecontroller': pageController
+                  'pagecontroller': controller
                 });
               },
               child: Column(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:masjid/core/exports.dart';
+import 'package:masjid/presentation/logic/timepicker_bloc.dart';
+import 'package:masjid/presentation/logic/timetable_bloc/timetable_bloc.dart';
 import 'package:masjid/presentation/widgets/common_widgets/date_time_widget.dart';
 import 'package:masjid/presentation/widgets/home_widgets/home_initial_widget.dart';
 import 'package:masjid/presentation/widgets/home_widgets/home_loading_widget.dart';
@@ -26,6 +28,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final homeBloc = BlocProvider.of<HomeBloc>(context);
+    final timeBloc = BlocProvider.of<TimePickerBloc>(context);
     return AnnotatedScaffold(
       body: Stack(
         children: <Widget>[
@@ -189,7 +192,7 @@ class _HomeState extends State<Home> {
                         controller: _controller,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Search & Add Masjid",
+                          hintText: "Find Town",
                           prefixIcon: SvgPicture.asset(
                             AssetConstants.search,
                             fit: BoxFit.scaleDown,
@@ -221,9 +224,9 @@ class _HomeState extends State<Home> {
                           if (value.length >= 3) {
                             homeBloc.add(HomeEventGetMasjid(value));
                           }
-                           if(value.isEmpty){
+                          if (value.isEmpty) {
                             FocusScope.of(context).unfocus();
-                            }
+                          }
                         },
                       ),
                     ),
@@ -239,13 +242,8 @@ class _HomeState extends State<Home> {
                               controller: _pagecontroller,
                               dateTime: DateTime.now(),
                               onSelected: (value) {
-                                //
-                                homeBloc.add(
-                                  HomeDateEvent(
-                                    datetime: value,
-                                    keyword: _controller.text,
-                                  ),
-                                );
+                                // change datetime and timetable search
+                                timeBloc.add(SelectedTimeEvent(value));
                               },
                             ),
                             AnimatedSwitcher(
@@ -258,19 +256,16 @@ class _HomeState extends State<Home> {
                                     failed: (err) =>
                                         CustomErrorWidget(error: err),
                                     loading: () => const HomeLoadingWidget(),
-                                    data: (data){
-                                          if(_controller.text.isEmpty){
-                                            data =[];
-                                            return HomeInitialWidget(
-                                        pageController: _pagecontroller);
-                                          }else{
-                                            return   HomeDataWidget(
-                                        data: data,
-                                        pageController: _pagecontroller);
-                                          }
-                                    }
-                                   
-                                    
+                                    data: (data) {
+                                      return _controller.text.isEmpty
+                                          ? HomeInitialWidget(
+                                              pageController: _pagecontroller,
+                                            )
+                                          : HomeDataWidget(
+                                              data: data,
+                                              controller: _pagecontroller,
+                                            );
+                                    },
                                   );
                                 },
                               ),
