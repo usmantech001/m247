@@ -127,11 +127,12 @@ String checkTheNumberOfJummuah({
 }
 
 bool checkIfTodayIsFridayAndJummuhIsNotEmpty({
+  required DateTime dateTime,
   required String jummah,
 }){
   String emptyString = '';
   final now = DateTime.now();
-  if(now.weekday == DateTime.friday){
+  if(dateTime.weekday == DateTime.friday){
     if(jummah!=emptyString){
       return true;
     }else{

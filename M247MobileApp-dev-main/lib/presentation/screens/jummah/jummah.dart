@@ -177,7 +177,7 @@ class Jummah extends StatelessWidget {
                         controller: _controller,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Search & Add Jummah",
+                          hintText: "Find Town",
                           prefixIcon: SvgPicture.asset(
                             AssetConstants.search,
                             fit: BoxFit.scaleDown,
@@ -262,7 +262,7 @@ class Jummah extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Jumma",
+                                              "Jummah",
                                               style: TextStyle(
                                                 fontFamily: 'SFPro',
                                                 fontSize: 14.sp,
@@ -290,7 +290,7 @@ class Jummah extends StatelessWidget {
                                     child: Padding(
                                       padding: EdgeInsets.only(right: 5.w),
                                       child: Text(
-                                        "Jumma 2",
+                                        "Jummah 2/3/4",
                                         style: TextStyle(
                                           fontFamily: 'SFPro',
                                           fontSize: 14.sp,

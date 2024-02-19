@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:masjid/core/exports.dart';
 import 'package:masjid/presentation/logic/timepicker_bloc.dart';
-import 'package:masjid/presentation/logic/timetable_bloc/timetable_bloc.dart';
 import 'package:masjid/presentation/widgets/common_widgets/date_time_widget.dart';
 import 'package:masjid/presentation/widgets/home_widgets/home_initial_widget.dart';
 import 'package:masjid/presentation/widgets/home_widgets/home_loading_widget.dart';
@@ -21,7 +20,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _pagecontroller = PageController();
+    _pagecontroller = PageController(keepPage: true);
     _controller = TextEditingController();
   }
 
@@ -192,7 +191,7 @@ class _HomeState extends State<Home> {
                         controller: _controller,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Find Town",
+                          hintText: "Search & Add Masjid",
                           prefixIcon: SvgPicture.asset(
                             AssetConstants.search,
                             fit: BoxFit.scaleDown,

@@ -153,7 +153,7 @@ class MasjidTile extends StatelessWidget {
                       return state.when(
                         idle: () => const TimetableInitialWidget(),
                         loading: () => const TimetableInitialWidget(),
-                        data: (data) => TimetableDataWidget(snapshot: data),
+                        data: (data) => TimetableDataWidget(snapshot: data, pagecontroller: controller,),
                         failed: (err) => CustomErrorWidget(error: err),
                       );
                     },

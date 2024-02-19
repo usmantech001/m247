@@ -35,6 +35,23 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
     return list;
   }
 
+  _selectDate(context) async {
+    DateTime? date = await showDatePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(4030),
+    );
+    if (date != null) {
+      setState(() {
+        now = date;
+        widget.onSelected(date);
+        int page = date.difference(DateTime.now()).inDays;
+        widget.controller.jumpToPage(page+1);
+      });
+    }
+  }
+
+  int initialPage = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -65,6 +82,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
                   setState(() {});
                   widget.controller
                       .previousPage(duration: kDuration, curve: Curves.easeIn);
+                  //  widget.controller.jumpToPage(initialPage--);
                 },
                 child: Icon(
                   Icons.arrow_back_ios,
@@ -94,18 +112,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          DateTime? date = await showDatePicker(
-                            context: context,
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime(4030),
-                            initialDate: DateTime.now(),
-                          );
-                          if (date != null) {
-                            setState(() {
-                              now = date;
-                              widget.onSelected(now);
-                            });
-                          }
+                          _selectDate(context);
                         },
                         child: Text(
                           now.formatted(),
@@ -146,6 +153,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
               child: GestureDetector(
                 onTap: () {
                   // go to next datetime
+                  //widget.controller.jumpToPage();
                   widget.controller
                       .nextPage(duration: kDuration, curve: Curves.easeIn);
                   setState(() {});

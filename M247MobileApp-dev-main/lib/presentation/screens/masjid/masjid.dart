@@ -13,7 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/masjid_widgets/masjid_data_widget.dart';
 
-class Masjid extends StatelessWidget {
+class Masjid extends StatefulWidget {
   final MasjidModel? masjid;
   final PageController pageController;
 
@@ -25,18 +25,24 @@ class Masjid extends StatelessWidget {
 
   static final _controller = PageController();
 
+  @override
+  State<Masjid> createState() => _MasjidState();
+}
+
+class _MasjidState extends State<Masjid> {
   Future<void> _launchUrl(Uri url) async {
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {}
   }
-
+     DateTime dateTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
+
     final masjidBloc = BlocProvider.of<MasjidBloc>(context);
     final timetableBloc = BlocProvider.of<TimetableBloc>(context);
-    masjidBloc.add(GetMasjidEvent(masjid!.id!));
-    timetableBloc.add(GetTimetableEvent(masjid!.id));
+    masjidBloc.add(GetMasjidEvent(widget.masjid!.id!));
+    timetableBloc.add(GetTimetableEvent(widget.masjid!.id));
     return AnnotatedScaffold(
       body: Stack(
         children: <Widget>[
@@ -45,7 +51,7 @@ class Masjid extends StatelessWidget {
             child: CachedNetworkImage(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.4,
-              imageUrl: masjid!.id.toString().toDevImage(),
+              imageUrl: widget.masjid!.id.toString().toDevImage(),
               imageBuilder: (context, imageProvider) {
                 return Container(
                   decoration: BoxDecoration(
@@ -100,7 +106,7 @@ class Masjid extends StatelessWidget {
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Text(
-                                masjid!.name!,
+                                widget.masjid!.name!,
                                 style: TextStyle(
                                   fontFamily: 'QueenFont',
                                   fontSize: 25.sp,
@@ -133,11 +139,11 @@ class Masjid extends StatelessWidget {
                                   <PopupMenuEntry<String>>[
                                     PopupMenuItem(
                                       onTap: () {
-                                        if (masjid!.tel1!.isNotEmpty &&
-                                            masjid!.tel1 != null) {
+                                        if (widget.masjid!.tel1!.isNotEmpty &&
+                                            widget.masjid!.tel1 != null) {
                                           _launchUrl(Uri(
                                               scheme: 'tel',
-                                              path: masjid!.tel1));
+                                              path: widget.masjid!.tel1));
                                         }
                                       },
                                       height: 0,
@@ -168,8 +174,8 @@ class Masjid extends StatelessWidget {
                                     const PopupMenuDivider(),
                                     PopupMenuItem(
                                       onTap: () {
-                                        String? latitude = masjid!.latitude;
-                                        String? longitude = masjid!.longitude;
+                                        String? latitude = widget.masjid!.latitude;
+                                        String? longitude = widget.masjid!.longitude;
                                         if ((latitude!.isNotEmpty &&
                                                 latitude != null) &&
                                             (longitude!.isNotEmpty &&
@@ -206,18 +212,18 @@ class Masjid extends StatelessWidget {
                                     ),
                                     PopupMenuDivider(
                                       height:
-                                          masjid!.whatsAppLink != null ? 16 : 0,
+                                          widget.masjid!.whatsAppLink != null ? 16 : 0,
                                     ),
                                     PopupMenuItem(
                                       onTap: () {
-                                        if (masjid!.whatsAppLink!.isNotEmpty &&
-                                            masjid!.whatsAppLink != null) {
-                                          final url = masjid!.whatsAppLink;
+                                        if (widget.masjid!.whatsAppLink!.isNotEmpty &&
+                                            widget.masjid!.whatsAppLink != null) {
+                                          final url = widget.masjid!.whatsAppLink;
                                           _launchUrl(Uri.parse(url!));
                                         }
                                       },
                                       height: 0,
-                                      child: masjid!.whatsAppLink != null
+                                      child: widget.masjid!.whatsAppLink != null
                                           ? Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
@@ -271,12 +277,12 @@ class Masjid extends StatelessWidget {
                       child: Row(
                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          masjid!.audioStream != null
+                          widget.masjid!.audioStream != null
                               ? SvgButton(
                                   icon: AssetConstants.audio,
                                   onPressed: () async {
                                     // open audio link
-                                    final url = masjid!.audioStream;
+                                    final url = widget.masjid!.audioStream;
                                     if (url != null && url.isNotEmpty) {
                                       _launchUrl(Uri.parse(url));
                                     }
@@ -286,13 +292,13 @@ class Masjid extends StatelessWidget {
                                   width: 0,
                                 ),
                           SizedBox(
-                              width: masjid!.audioStream != null ? 15.w : 0.w),
-                          masjid!.youtube != null && masjid!.youtube!.isNotEmpty
+                              width: widget.masjid!.audioStream != null ? 15.w : 0.w),
+                          widget.masjid!.youtube != null && widget.masjid!.youtube!.isNotEmpty
                               ? SvgButton(
                                   icon: AssetConstants.video,
                                   onPressed: () async {
                                     // open video link
-                                    final url = masjid!.youtube;
+                                    final url = widget.masjid!.youtube;
                                     if (url != null && url.isNotEmpty) {
                                       _launchUrl(Uri.parse(url));
                                     }
@@ -300,12 +306,12 @@ class Masjid extends StatelessWidget {
                                 )
                               : Container(),
                           SizedBox(
-                            width: masjid!.youtube != null ? 15.w : 0.w,
+                            width: widget.masjid!.youtube != null ? 15.w : 0.w,
                           ),
-                          masjid!.transmitter != null &&
-                                  masjid!.transmitter!.isNotEmpty
+                          widget.masjid!.transmitter != null &&
+                                  widget.masjid!.transmitter!.isNotEmpty
                               ? SvgTextButton(
-                                  text: "${masjid!.transmitter}",
+                                  text: "${widget.masjid!.transmitter}",
                                   icon: AssetConstants.satelite,
                                   onPressed: () {
                                     // ask for details
@@ -324,11 +330,16 @@ class Masjid extends StatelessWidget {
                           children: [
                             DateTimeWidget(
                               isFromHome: false,
-                              controller: _controller,
+                              controller: Masjid._controller,
                               dateTime: DateTime.now(),
                               onSelected: (value) {
+                                // dateTime = value;
+                                // setState(() {
+                                // });
+                                
+                                print('The currentsssss date is $value');
                                 timetableBloc.add(GetTimetableDateEvent(
-                                    id: masjid!.id, date: value));
+                                    id: widget.masjid!.id, date: value));
                               },
                             ),
                             Padding(
@@ -400,7 +411,7 @@ class Masjid extends StatelessWidget {
                                     loading: () => const MasjidInitialWidget(),
                                     data: (data) => MasjidDataWidget(
                                         snapshot: data,
-                                        pagecontroller: _controller),
+                                        pagecontroller: Masjid._controller),
                                     failed: (err) => const CustomErrorWidget(
                                       error:
                                           'No internet connection, please connect to the internet',

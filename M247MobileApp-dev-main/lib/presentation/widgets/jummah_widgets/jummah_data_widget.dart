@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:masjid/core/exports.dart';
 import 'package:masjid/data/models/jummah_model.dart';
+import 'package:masjid/presentation/widgets/timechecker/timechecker.dart';
 
 class JummahDataWidget extends StatelessWidget {
   final List<JummahModel> data;
@@ -93,7 +94,11 @@ class _JummahTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    snapshot!.jummah2 ?? "",
+                    checkTheNumberOfJummuah(
+                        jummah1: snapshot!.jummah2 ?? '',
+                        jummah2: snapshot!.jummah3 ?? '',
+                        jummah3: snapshot!.jummah4 ?? '',
+                        jummah4: ''),
                     style: TextStyle(
                       fontFamily: 'SFPro',
                       fontSize: 22.sp,
