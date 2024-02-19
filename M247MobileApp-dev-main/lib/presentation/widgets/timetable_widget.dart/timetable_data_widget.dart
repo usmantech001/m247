@@ -26,6 +26,7 @@ class TimetableDataWidget extends StatelessWidget {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
+           mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
                _EventTile(
                 name: "Sunrise",
@@ -118,20 +119,8 @@ class TimetableDataWidget extends StatelessWidget {
                 endTime1: snapshot.jamEsha,
                 startTime: snapshot.begEsha,
               ),
-            /*  _EventTile(
-                name: "Jumma",
-                selected: snapshot.jummah2!.isEmpty || snapshot.jummah2!.isEmpty
-                    ? false
-                    : checkPrayerTime(
-                        startTime: '${snapshot.jummah2} PM',
-                        endTime: '${snapshot.jummah1} PM'),
-                endTime1: checkTheNumberOfJummuah(
-                    jummah1: snapshot.jummah1 ?? '',
-                    jummah2: snapshot.jummah2 ?? '',
-                    jummah3: snapshot.jummah3 ?? '',
-                    jummah4: snapshot.jummah4 ?? ''),
-                startTime: '--',
-              ),*/
+              
+                   
             ],
           ),
         )
@@ -154,7 +143,9 @@ class _EventTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+     
       decoration: BoxDecoration(
+        
         boxShadow: [
           if (selected!) ...[
             const BoxShadow(

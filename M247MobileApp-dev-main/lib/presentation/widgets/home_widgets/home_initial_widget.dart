@@ -214,9 +214,7 @@ class _MasjidTile extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 12.h),
-                Center(
-                  child: TimetableDataWidget(snapshot: timetable!, pagecontroller: pageController,),
-                ),
+                Center(child: TimetableDataWidget(snapshot: timetable!, pagecontroller: pageController,)),
               ],
             ),
           ),
