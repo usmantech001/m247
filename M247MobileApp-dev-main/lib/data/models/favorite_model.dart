@@ -6,22 +6,26 @@ class FavoriteModel {
   int? id;
   MasjidModel? masjid;
   TimetableModel? timetable;
+  String? dateTime;
 
   FavoriteModel({
     this.id,
     this.masjid,
     this.timetable,
+    this.dateTime,
   });
 
   FavoriteModel.fromJson(Json json) {
     id = json['id'];
+    dateTime = json['dateTime'];
     masjid = MasjidModel.fromJson(json['masjid']);
     timetable = TimetableModel.fromJson(json['timetable']);
   }
 
-  Json toJson() {
-    Json data = <String, dynamic>{};
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
     data['id'] = id;
+    data['dateTime'] = dateTime;
     data['masjid'] = masjid!.toJson();
     data['timetable'] = timetable!.toJson();
     return data;

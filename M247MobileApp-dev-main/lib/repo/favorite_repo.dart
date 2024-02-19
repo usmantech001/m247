@@ -12,7 +12,7 @@ class FavouriteRepo extends GetxService {
   saveFavouriteMasjid(List<FavoriteModel> favList) {
     favMasjidLists = [];
     for (var e in favList) {
-      favMasjidLists.add(jsonEncode(e));
+      favMasjidLists.add(jsonEncode(e.toJson()));
     }
     sharedPreferences.setStringList(SAVE_FAV_MASJID_LIST, favMasjidLists);
   }
@@ -27,5 +27,8 @@ class FavouriteRepo extends GetxService {
       favouriteList.add(FavoriteModel.fromJson(jsonDecode(e)));
     }
     return favouriteList;
+  }
+  remove(){
+    sharedPreferences.remove(SAVE_FAV_MASJID_LIST);
   }
 }

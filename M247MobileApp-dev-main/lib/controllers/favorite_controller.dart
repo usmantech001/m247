@@ -6,6 +6,12 @@ import 'package:masjid/presentation/widgets/snackbar.dart';
 import 'package:masjid/repo/favorite_repo.dart';
 
 class FavoriteController extends GetxController {
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  //  favouriteRepo.remove();
+  }
   FavouriteRepo favouriteRepo;
   FavoriteController({required this.favouriteRepo});
   bool isFavorite = false;
@@ -22,7 +28,7 @@ class FavoriteController extends GetxController {
         false) {
       _favoriteMasjidList.putIfAbsent(masjid.id!, () {
         return FavoriteModel(
-            id: masjid.id, masjid: masjid, timetable: timetable);
+            id: masjid.id, masjid: masjid, timetable: timetable, dateTime: DateTime.now().toString());
       });
       showSnackBar(title: 'Added', text: '${masjid.name} Added to favourite');
       getItemsLenght();
@@ -37,7 +43,6 @@ class FavoriteController extends GetxController {
 
       update();
     }
-    // favouriteRepo.saveFavouriteItems(getfavItems);
     update();
   }
 

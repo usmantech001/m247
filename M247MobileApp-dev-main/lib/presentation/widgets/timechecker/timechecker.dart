@@ -15,7 +15,7 @@ bool checkPrayerTime(
   final startAMorPM = DateFormat('a').format(startTimeHour);
   final endTimeHour = checkForCorrectFormattingEndTime(endTime);
 
-  if (nowAMorPM == startAMorPM) {
+  if (nowAMorPM == startAMorPM && endTimeHour!=null) {
     if (now.hour > startTimeHour.hour ||
         (now.hour == startTimeHour.hour &&
             now.minute >= startTimeHour.minute)) {
@@ -31,13 +31,18 @@ bool checkPrayerTime(
   return false;
 }
 
-DateTime checkForCorrectFormattingEndTime(String endTime) {
-  if (endTime.contains('.')) {
+DateTime? checkForCorrectFormattingEndTime(String endTime) {
+  print('The endTime is $endTime');
+   if(endTime!=' PM' && endTime!=' AM'){
+     if (endTime.contains('.')) {
     String formattedEndTime = endTime.replaceAll('.', ':');
     return DateFormat('h:mm a').parse(formattedEndTime);
   } else {
     return DateFormat('h:mm a').parse(endTime);
   }
+   }
+   return null;
+  
 }
 
 DateTime checkForCorrectFormattingStartTime(String startTime) {
@@ -49,7 +54,7 @@ DateTime checkForCorrectFormattingStartTime(String startTime) {
   }
 }
 
-checkIfEshaHasEnd({
+ checkIfEshaHasEnd({
   String eshaEndTime = '',
   required PageController pageController,
   required String startTime,
@@ -64,11 +69,14 @@ checkIfEshaHasEnd({
             generate()[pageController.page?.round() ?? 0].formatted()) {
           final formattedEndEshaTime =
               checkForCorrectFormattingEndTime(endTime);
-          if (now.hour == formattedEndEshaTime.hour &&
+           // changes made
+          if(formattedEndEshaTime!=null){
+            if (now.hour == formattedEndEshaTime.hour &&
               now.minute >= formattedEndEshaTime.minute) {
             pageController.nextPage(duration: kDuration, curve: Curves.easeIn);
           } else if (now.hour > formattedEndEshaTime.hour && now.hour != 12) {
             pageController.nextPage(duration: kDuration, curve: Curves.easeIn);
+          }
           }
         }
       }

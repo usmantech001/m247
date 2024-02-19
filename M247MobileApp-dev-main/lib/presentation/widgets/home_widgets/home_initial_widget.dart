@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:masjid/core/exports.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:masjid/controllers/favorite_controller.dart';
+import 'package:masjid/core/extension/datetime_extension.dart';
 import 'package:masjid/core/extension/string_extension.dart';
 import 'package:masjid/core/theme/app_theme.dart';
 import 'package:masjid/data/models/favorite_model.dart';
@@ -11,9 +12,11 @@ import 'package:masjid/presentation/widgets/timetable_widget.dart/timetable_data
 
 class HomeInitialWidget extends StatelessWidget {
   final PageController pageController;
+  final DateTime dateTime;
   const HomeInitialWidget({
     super.key,
     required this.pageController,
+    required this.dateTime
   });
 
   @override
@@ -21,7 +24,8 @@ class HomeInitialWidget extends StatelessWidget {
     return GetBuilder<FavoriteController>(
       builder: (controller) {
         if (controller.favMasjidList.isNotEmpty) {
-          final data = controller.favMasjidList;
+          final data = controller.favMasjidList.where((favmasjid) => DateTime.parse(favmasjid.dateTime!).formatted()==dateTime.formatted() ).toList();
+       //  final data = controller.favMasjidList;
           return _Favorites(
             data: data,
             pageController: pageController,

@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
     _pagecontroller = PageController(keepPage: true);
     _controller = TextEditingController();
   }
-
+  DateTime dateTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
     final homeBloc = BlocProvider.of<HomeBloc>(context);
@@ -241,6 +241,11 @@ class _HomeState extends State<Home> {
                               controller: _pagecontroller,
                               dateTime: DateTime.now(),
                               onSelected: (value) {
+                                dateTime = value;
+                                setState(() {
+                                  
+                                });
+                                print('The selected date is $dateTime');
                                 // change datetime and timetable search
                                 timeBloc.add(SelectedTimeEvent(value));
                               },
@@ -251,6 +256,7 @@ class _HomeState extends State<Home> {
                                 builder: (context, state) {
                                   return state.when(
                                     idle: () => HomeInitialWidget(
+                                      dateTime: dateTime,
                                         pageController: _pagecontroller),
                                     failed: (err) =>
                                         CustomErrorWidget(error: err),
@@ -259,6 +265,7 @@ class _HomeState extends State<Home> {
                                       return _controller.text.isEmpty
                                           ? HomeInitialWidget(
                                               pageController: _pagecontroller,
+                                              dateTime: dateTime,
                                             )
                                           : HomeDataWidget(
                                               data: data,
