@@ -6,10 +6,12 @@ import 'package:masjid/presentation/widgets/home_widgets/masjid_tile.dart';
 class HomeDataWidget extends StatelessWidget {
   final List<MasjidModel> data;
   final PageController controller;
+  final DateTime dateTime;
   const HomeDataWidget({
     super.key,
     required this.data,
     required this.controller,
+    required this.dateTime
   });
 
   @override
@@ -21,7 +23,7 @@ class HomeDataWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final snapshot = data[index];
-        return MasjidTile(masjid: snapshot, controller: controller);
+        return MasjidTile(masjid: snapshot, controller: controller, dateTime:dateTime);
       },
     );
   }

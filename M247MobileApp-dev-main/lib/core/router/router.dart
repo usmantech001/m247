@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:masjid/data/models/masjid_model.dart';
 import 'package:masjid/presentation/screens/home/home.dart';
 import 'package:masjid/presentation/screens/jummah/jummah.dart';
 import 'package:masjid/presentation/screens/masjid/masjid.dart';

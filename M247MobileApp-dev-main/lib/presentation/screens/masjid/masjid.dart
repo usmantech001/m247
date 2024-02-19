@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:masjid/core/exports.dart';
 import 'package:masjid/core/extension/string_extension.dart';
@@ -333,11 +335,7 @@ class _MasjidState extends State<Masjid> {
                               controller: Masjid._controller,
                               dateTime: DateTime.now(),
                               onSelected: (value) {
-                                // dateTime = value;
-                                // setState(() {
-                                // });
-                                
-                                print('The currentsssss date is $value');
+               
                                 timetableBloc.add(GetTimetableDateEvent(
                                     id: widget.masjid!.id, date: value));
                               },

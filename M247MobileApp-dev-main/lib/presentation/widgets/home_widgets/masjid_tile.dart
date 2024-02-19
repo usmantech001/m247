@@ -14,11 +14,12 @@ import 'package:masjid/presentation/widgets/timetable_widget.dart/timetable_init
 class MasjidTile extends StatelessWidget {
   final MasjidModel? masjid;
   final PageController controller;
-
+  final DateTime dateTime;
   const MasjidTile({
     super.key,
     this.masjid,
     required this.controller,
+    required this.dateTime
   });
 
   @override
@@ -125,9 +126,10 @@ class MasjidTile extends StatelessWidget {
                                 return IconButton(
                                   onPressed: () {
                                     // add new favorite
+                               
                                     final TimetableModel timetable = state.data;
                                     favouriteController.addToFavourite(
-                                        masjid!, timetable);
+                                        masjid!, timetable, dateTime);
                                   },
                                   icon: favouriteController.existInFavourite(
                                             masjid!,

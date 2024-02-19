@@ -245,7 +245,7 @@ class _HomeState extends State<Home> {
                                 setState(() {
                                   
                                 });
-                                print('The selected date is $dateTime');
+                              
                                 // change datetime and timetable search
                                 timeBloc.add(SelectedTimeEvent(value));
                               },
@@ -268,6 +268,7 @@ class _HomeState extends State<Home> {
                                               dateTime: dateTime,
                                             )
                                           : HomeDataWidget(
+                                             dateTime:dateTime,
                                               data: data,
                                               controller: _pagecontroller,
                                             );

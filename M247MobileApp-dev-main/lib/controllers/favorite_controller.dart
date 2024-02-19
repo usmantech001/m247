@@ -6,11 +6,10 @@ import 'package:masjid/presentation/widgets/snackbar.dart';
 import 'package:masjid/repo/favorite_repo.dart';
 
 class FavoriteController extends GetxController {
+  // ignore: unnecessary_overrides
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-  //  favouriteRepo.remove();
   }
   FavouriteRepo favouriteRepo;
   FavoriteController({required this.favouriteRepo});
@@ -21,14 +20,15 @@ class FavoriteController extends GetxController {
   List<FavoriteModel> storedFavItems = [];
   int itemLenght = 0;
 
-  addToFavourite(MasjidModel masjid, TimetableModel timetable) {
+  addToFavourite(MasjidModel masjid, TimetableModel timetable, DateTime dateTime) {
     if (existInFavourite(
           masjid,
         ) ==
         false) {
       _favoriteMasjidList.putIfAbsent(masjid.id!, () {
+        print('The date for this masjid is $dateTime');
         return FavoriteModel(
-            id: masjid.id, masjid: masjid, timetable: timetable, dateTime: DateTime.now().toString());
+            id: masjid.id, masjid: masjid, timetable: timetable, dateTime: dateTime.toString());
       });
       showSnackBar(title: 'Added', text: '${masjid.name} Added to favourite');
       getItemsLenght();

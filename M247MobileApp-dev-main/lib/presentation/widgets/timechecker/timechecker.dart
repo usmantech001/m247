@@ -32,7 +32,6 @@ bool checkPrayerTime(
 }
 
 DateTime? checkForCorrectFormattingEndTime(String endTime) {
-  print('The endTime is $endTime');
    if(endTime!=' PM' && endTime!=' AM'){
      if (endTime.contains('.')) {
     String formattedEndTime = endTime.replaceAll('.', ':');
@@ -139,7 +138,6 @@ bool checkIfTodayIsFridayAndJummuhIsNotEmpty({
   required String jummah,
 }){
   String emptyString = '';
-  final now = DateTime.now();
   if(dateTime.weekday == DateTime.friday){
     if(jummah!=emptyString){
       return true;
