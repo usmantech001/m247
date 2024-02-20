@@ -28,16 +28,7 @@ class TimetableDataWidget extends StatelessWidget {
           child: Row(
            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-               _EventTile(
-                name: "Sunrise",
-                selected: snapshot.sunrise!.isEmpty || snapshot.sunset!.isEmpty
-                    ? false
-                    : checkPrayerTime(
-                        startTime: '${snapshot.sunset} AM',
-                        endTime: '${snapshot.sunrise} AM'),
-                endTime1: snapshot.sunrise,
-                startTime: snapshot.sunset,
-              ),
+               
               snapshot.sehriEnd!.isEmpty
                   ? Container()
                   : _EventTile(
@@ -60,7 +51,16 @@ class TimetableDataWidget extends StatelessWidget {
                 endTime1: snapshot.jamFajr,
                 startTime: snapshot.begFajr,
               ),
-             
+             _EventTile(
+                name: "Sunrise",
+                selected: snapshot.sunrise!.isEmpty || snapshot.sunset!.isEmpty
+                    ? false
+                    : checkPrayerTime(
+                        startTime: '${snapshot.sunset} AM',
+                        endTime: '${snapshot.sunrise} AM'),
+                endTime1: snapshot.sunrise,
+                startTime: snapshot.sunset,
+              ),
             checkIfTodayIsFridayAndJummuhIsNotEmpty(
               dateTime: generate[pagecontroller.page!.toInt()],
               jummah: snapshot.jummah1??'')==true?

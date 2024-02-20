@@ -42,20 +42,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
       removeTop: true,
       child: Column(
         children: [
-          _EventTile(
-            name: "Sunrise",
-            startAMPM: widget.snapshot.sunset!.isEmpty ? '' : am,
-            endAMPM: '',
-            selected: widget.snapshot.sunrise!.isEmpty ||
-                    widget.snapshot.sunset!.isEmpty
-                ? false
-                : checkPrayerTime(
-                    startTime: '${widget.snapshot.sunset} $am',
-                    endTime: '${widget.snapshot.sunrise} $am',
-                    pagecontroller: widget.pagecontroller),
-            endTime: '',
-            startTime: widget.snapshot.sunrise,
-          ),
+          
           _EventTile(
             startAMPM: widget.snapshot.begFajr!.isEmpty ? '' : am,
             endAMPM: widget.snapshot.jamFajr!.isEmpty ? '' : am,
@@ -69,6 +56,20 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                     pagecontroller: widget.pagecontroller),
             endTime: widget.snapshot.jamFajr,
             startTime: widget.snapshot.begFajr,
+          ),
+          _EventTile(
+            name: "Sunrise",
+            startAMPM: widget.snapshot.sunset!.isEmpty ? '' : am,
+            endAMPM: '',
+            selected: widget.snapshot.sunrise!.isEmpty ||
+                    widget.snapshot.sunset!.isEmpty
+                ? false
+                : checkPrayerTime(
+                    startTime: '${widget.snapshot.sunset} $am',
+                    endTime: '${widget.snapshot.sunrise} $am',
+                    pagecontroller: widget.pagecontroller),
+            endTime: '',
+            startTime: widget.snapshot.sunrise,
           ),
           checkIfTodayIsFridayAndJummuhIsNotEmpty(
             dateTime: generate[widget.pagecontroller.page?.toInt()?? 0],
