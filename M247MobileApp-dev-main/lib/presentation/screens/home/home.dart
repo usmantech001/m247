@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _pagecontroller = PageController(keepPage: true);
+    _pagecontroller = PageController();
     _controller = TextEditingController();
   }
 
@@ -242,6 +242,10 @@ class _HomeState extends State<Home> {
                               controller: _pagecontroller,
                               dateTime: DateTime.now(),
                               onSelected: (value) {
+                                dateTime = value;
+                                setState(() {
+                                  
+                                });
                                 // change datetime and timetable search
                                 timeBloc.add(SelectedTimeEvent(value));
                               },

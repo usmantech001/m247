@@ -49,7 +49,7 @@ class _MasjidState extends State<Masjid> {
     masjid = MasjidBloc()..add(GetMasjidEvent(widget.masjid!.id!));
     timetable = TimetableBloc()..add(GetTimetableEvent(widget.masjid!.id));
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -361,6 +361,12 @@ class _MasjidState extends State<Masjid> {
                                 controller: Masjid._controller,
                                 dateTime: DateTime.now(),
                                 onSelected: (value) {
+                                  print('The date time is $value');
+                                  dateTime = value;
+                                  setState(() {
+                                    
+
+                                  });
                                   timetable.add(GetTimetableDateEvent(
                                       id: widget.masjid!.id, date: value));
                                 },
@@ -434,6 +440,7 @@ class _MasjidState extends State<Masjid> {
                                       loading: () =>
                                           const MasjidInitialWidget(),
                                       data: (data) => MasjidDataWidget(
+                                        dateTime:dateTime,
                                           snapshot: data,
                                           pagecontroller: Masjid._controller),
                                       failed: (err) => const CustomErrorWidget(

@@ -76,7 +76,6 @@ checkIfEshaHasEnd({
             generate()[pageController.page?.round() ?? 0].formatted()) {
           final formattedEndEshaTime =
               checkForCorrectFormattingEndTime(endTime);
-          // changes made
           if (formattedEndEshaTime != null) {
             if (now.hour == formattedEndEshaTime.hour &&
                 now.minute >= formattedEndEshaTime.minute) {
@@ -148,7 +147,7 @@ bool checkIfTodayIsFridayAndJummuhIsNotEmpty({
   required String jummah,
 }) {
   String emptyString = '';
-  if (dateTime.weekday == DateTime.friday) {
+  if (dateTime.weekday ==5) {
     if (jummah != emptyString) {
       return true;
     } else {

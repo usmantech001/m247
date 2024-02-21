@@ -30,6 +30,7 @@ class HomeInitialWidget extends StatelessWidget {
           return _Favorites(
             data: data,
             pageController: pageController,
+            dateTime: dateTime,
           );
         }
         return const _EmptyWidget();
@@ -41,9 +42,11 @@ class HomeInitialWidget extends StatelessWidget {
 class _Favorites extends StatelessWidget {
   final List<FavoriteModel> data;
   final PageController pageController;
+   final DateTime dateTime;
   const _Favorites({
     required this.data,
     required this.pageController,
+    required this.dateTime,
   });
 
   @override
@@ -55,6 +58,7 @@ class _Favorites extends StatelessWidget {
       padding: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 15.h),
       itemBuilder: (_, index) {
         return _MasjidTile(
+          dateTime: dateTime,
           index: index,
           masjid: data[index].masjid,
           pageController: pageController,
@@ -103,10 +107,12 @@ class _MasjidTile extends StatefulWidget {
   final PageController pageController;
   final int? index;
   final MasjidModel? masjid;
+   final DateTime dateTime;
   const _MasjidTile({
     this.index,
     this.masjid,
     required this.pageController,
+    required this.dateTime
   });
 
   @override
@@ -242,8 +248,9 @@ class _MasjidTileState extends State<_MasjidTile> {
                           loading: () => const TimetableInitialWidget(),
                           failed: (err) => const TimetableInitialWidget(),
                           data: (data) => TimetableDataWidget(
+                            dateTime: widget.dateTime,
                               snapshot: data,
-                              pagecontroller: widget.pageController),
+                             ),
                         );
                       },
                     ),

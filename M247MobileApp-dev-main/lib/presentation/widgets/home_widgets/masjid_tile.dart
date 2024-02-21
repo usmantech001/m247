@@ -174,8 +174,8 @@ class _MasjidTileState extends State<MasjidTile> {
                           idle: () => const TimetableInitialWidget(),
                           loading: () => const TimetableInitialWidget(),
                           data: (data) => TimetableDataWidget(
+                            dateTime: widget.dateTime,
                             snapshot: data,
-                            pagecontroller: widget.controller,
                           ),
                           failed: (err) => CustomErrorWidget(error: err),
                         );

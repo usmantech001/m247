@@ -5,18 +5,14 @@ import 'package:masjid/presentation/widgets/timechecker/timechecker.dart';
 
 class TimetableDataWidget extends StatelessWidget {
   final TimetableModel snapshot;
-  final PageController pagecontroller;
+   final DateTime dateTime;
   const TimetableDataWidget({
     super.key,
     required this.snapshot,
-    required this.pagecontroller,
+    required this.dateTime
   });
   static DateTime now = DateTime.now();
 
-  List<DateTime> get generate {
-    final list = List.generate(50, (index) => now.add(Duration(days: index)));
-    return list;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +60,7 @@ class TimetableDataWidget extends StatelessWidget {
                   startTime: snapshot.sunset,
                 ),
                 checkIfTodayIsFridayAndJummuhIsNotEmpty(
-                            dateTime: generate[pagecontroller.page!.toInt()],
+                            dateTime:dateTime,
                             jummah: snapshot.jummah1 ?? '') ==
                         true
                     ? _EventTile(

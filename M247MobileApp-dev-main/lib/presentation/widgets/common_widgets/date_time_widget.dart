@@ -102,7 +102,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
                 onPageChanged: (index) {
                   widget.onSelected(ranges[index]);
                   now = ranges[index];
-
+                 print('The updated date is $now');
                   setState(() {});
                 },
                 itemBuilder: (context, index) {
@@ -154,10 +154,12 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
               child: GestureDetector(
                 onTap: () {
                   // go to next datetime
-                  //widget.controller.jumpToPage();
                   widget.controller
                       .nextPage(duration: kDuration, curve: Curves.easeIn);
-                  setState(() {});
+                //       int index = widget.controller.page!=null?widget.controller.page!.toInt():0;
+                //       now = ranges[index];
+                //   setState(() {});
+                //  print('The date now is $now');
                 },
                 child: Icon(
                   Icons.arrow_forward_ios,
