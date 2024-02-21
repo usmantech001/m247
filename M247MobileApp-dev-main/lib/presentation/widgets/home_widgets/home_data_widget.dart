@@ -7,12 +7,11 @@ class HomeDataWidget extends StatelessWidget {
   final List<MasjidModel> data;
   final PageController controller;
   final DateTime dateTime;
-  const HomeDataWidget({
-    super.key,
-    required this.data,
-    required this.controller,
-    required this.dateTime
-  });
+  const HomeDataWidget(
+      {super.key,
+      required this.data,
+      required this.controller,
+      required this.dateTime});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,11 @@ class HomeDataWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final snapshot = data[index];
-        return MasjidTile(masjid: snapshot, controller: controller, dateTime:dateTime);
+        return MasjidTile(
+          masjid: snapshot,
+          dateTime: dateTime,
+          controller: controller,
+        );
       },
     );
   }

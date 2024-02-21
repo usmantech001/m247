@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
     _pagecontroller = PageController(keepPage: true);
     _controller = TextEditingController();
   }
+
   DateTime dateTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
@@ -241,15 +242,11 @@ class _HomeState extends State<Home> {
                               controller: _pagecontroller,
                               dateTime: DateTime.now(),
                               onSelected: (value) {
-                                dateTime = value;
-                                setState(() {
-                                  
-                                });
-                              
                                 // change datetime and timetable search
                                 timeBloc.add(SelectedTimeEvent(value));
                               },
                             ),
+                            SizedBox(height: 20.h),
                             AnimatedSwitcher(
                               duration: kDuration,
                               child: BlocBuilder<HomeBloc, FutureState>(
@@ -257,7 +254,8 @@ class _HomeState extends State<Home> {
                                   return state.when(
                                     idle: () => HomeInitialWidget(
                                       dateTime: dateTime,
-                                        pageController: _pagecontroller),
+                                      pageController: _pagecontroller,
+                                    ),
                                     failed: (err) =>
                                         CustomErrorWidget(error: err),
                                     loading: () => const HomeLoadingWidget(),
@@ -268,7 +266,7 @@ class _HomeState extends State<Home> {
                                               dateTime: dateTime,
                                             )
                                           : HomeDataWidget(
-                                             dateTime:dateTime,
+                                              dateTime: dateTime,
                                               data: data,
                                               controller: _pagecontroller,
                                             );

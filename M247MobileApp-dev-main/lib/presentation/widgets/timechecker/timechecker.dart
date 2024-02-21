@@ -15,7 +15,7 @@ bool checkPrayerTime(
   final startAMorPM = DateFormat('a').format(startTimeHour);
   final endTimeHour = checkForCorrectFormattingEndTime(endTime);
 
-  if (nowAMorPM == startAMorPM && endTimeHour!=null) {
+  if (nowAMorPM == startAMorPM && endTimeHour != null) {
     if (now.hour > startTimeHour.hour ||
         (now.hour == startTimeHour.hour &&
             now.minute >= startTimeHour.minute)) {
@@ -30,30 +30,38 @@ bool checkPrayerTime(
 
   return false;
 }
-
 DateTime? checkForCorrectFormattingEndTime(String endTime) {
-   if(endTime!=' PM' && endTime!=' AM'){
-     if (endTime.contains('.')) {
-    String formattedEndTime = endTime.replaceAll('.', ':');
-    return DateFormat('h:mm a').parse(formattedEndTime);
-  } else {
-    return DateFormat('h:mm a').parse(endTime);
+  if (endTime != ' PM' && endTime != ' AM' && endTime != 'Jamea') {
+    if (endTime.contains('.')) {
+      String formattedEndTime = endTime.replaceAll('.', ':');
+      return DateFormat('h:mm a').parse(formattedEndTime);
+    } else {
+      try {
+        return DateFormat('h:mm a').parse(endTime);
+      } catch (e) {
+        return DateFormat('h:mm a').parse("0:00 PM");
+      }
+    }
   }
-   }
-   return null;
-  
+  return null;
 }
+
+
 
 DateTime checkForCorrectFormattingStartTime(String startTime) {
   if (startTime.contains('.')) {
     String formattedStartTime = startTime.replaceAll('.', ':');
     return DateFormat('h:mm a').parse(formattedStartTime);
   } else {
-    return DateFormat('h:mm a').parse(startTime);
+    try {
+      return DateFormat('h:mm a').parse(startTime);
+    } catch (e) {
+      return DateFormat('h:mm a').parse("0:00 PM");
+    }
   }
 }
 
- checkIfEshaHasEnd({
+checkIfEshaHasEnd({
   String eshaEndTime = '',
   required PageController pageController,
   required String startTime,
@@ -68,14 +76,16 @@ DateTime checkForCorrectFormattingStartTime(String startTime) {
             generate()[pageController.page?.round() ?? 0].formatted()) {
           final formattedEndEshaTime =
               checkForCorrectFormattingEndTime(endTime);
-           // changes made
-          if(formattedEndEshaTime!=null){
+          // changes made
+          if (formattedEndEshaTime != null) {
             if (now.hour == formattedEndEshaTime.hour &&
-              now.minute >= formattedEndEshaTime.minute) {
-            pageController.nextPage(duration: kDuration, curve: Curves.easeIn);
-          } else if (now.hour > formattedEndEshaTime.hour && now.hour != 12) {
-            pageController.nextPage(duration: kDuration, curve: Curves.easeIn);
-          }
+                now.minute >= formattedEndEshaTime.minute) {
+              pageController.nextPage(
+                  duration: kDuration, curve: Curves.easeIn);
+            } else if (now.hour > formattedEndEshaTime.hour && now.hour != 12) {
+              pageController.nextPage(
+                  duration: kDuration, curve: Curves.easeIn);
+            }
           }
         }
       }
@@ -136,12 +146,12 @@ String checkTheNumberOfJummuah({
 bool checkIfTodayIsFridayAndJummuhIsNotEmpty({
   required DateTime dateTime,
   required String jummah,
-}){
+}) {
   String emptyString = '';
-  if(dateTime.weekday == DateTime.friday){
-    if(jummah!=emptyString){
+  if (dateTime.weekday == DateTime.friday) {
+    if (jummah != emptyString) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }

@@ -11,6 +11,7 @@ class FavoriteController extends GetxController {
   void onInit() {
     super.onInit();
   }
+
   FavouriteRepo favouriteRepo;
   FavoriteController({required this.favouriteRepo});
   bool isFavorite = false;
@@ -20,7 +21,8 @@ class FavoriteController extends GetxController {
   List<FavoriteModel> storedFavItems = [];
   int itemLenght = 0;
 
-  addToFavourite(MasjidModel masjid, TimetableModel timetable, DateTime dateTime) {
+  addToFavourite(
+      MasjidModel masjid, TimetableModel timetable, DateTime dateTime) {
     if (existInFavourite(
           masjid,
         ) ==
@@ -28,7 +30,10 @@ class FavoriteController extends GetxController {
       _favoriteMasjidList.putIfAbsent(masjid.id!, () {
         print('The date for this masjid is $dateTime');
         return FavoriteModel(
-            id: masjid.id, masjid: masjid, timetable: timetable, dateTime: dateTime.toString());
+            id: masjid.id,
+            masjid: masjid,
+            timetable: timetable,
+            dateTime: dateTime.toString());
       });
       showSnackBar(title: 'Added', text: '${masjid.name} Added to favourite');
       getItemsLenght();
@@ -39,16 +44,15 @@ class FavoriteController extends GetxController {
 
       update();
     } else if (_favoriteMasjidList.containsKey(masjid.id)) {
-      removeFromFavourite(masjid, timetable);
+      removeFromFavourite(masjid);
 
       update();
     }
     update();
   }
 
-  removeFromFavourite(MasjidModel masjid, TimetableModel timetableModel) {
+  removeFromFavourite(MasjidModel masjid) {
     _favoriteMasjidList.remove(masjid.id);
-    _favoriteMasjidList.remove(timetableModel.id);
 
     showSnackBar(
         title: 'Removed', text: '${masjid.name} Removed From favourite');

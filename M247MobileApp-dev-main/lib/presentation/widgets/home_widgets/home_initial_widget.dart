@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:masjid/core/exports.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:masjid/controllers/favorite_controller.dart';
-import 'package:masjid/core/extension/datetime_extension.dart';
 import 'package:masjid/core/extension/string_extension.dart';
 import 'package:masjid/core/theme/app_theme.dart';
 import 'package:masjid/data/models/favorite_model.dart';
 import 'package:masjid/data/models/masjid_model.dart';
-import 'package:masjid/data/models/timetable_model.dart';
+import 'package:masjid/presentation/logic/timepicker_bloc.dart';
+import 'package:masjid/presentation/logic/timetable_bloc/timetable_bloc.dart';
+import 'package:masjid/presentation/logic/timetable_bloc/timetable_event.dart';
 import 'package:masjid/presentation/widgets/timetable_widget.dart/timetable_data_widget.dart';
+import 'package:masjid/presentation/widgets/timetable_widget.dart/timetable_initial_widget.dart';
 
 class HomeInitialWidget extends StatelessWidget {
   final PageController pageController;
@@ -16,7 +18,7 @@ class HomeInitialWidget extends StatelessWidget {
   const HomeInitialWidget({
     super.key,
     required this.pageController,
-    required this.dateTime
+    required this.dateTime,
   });
 
   @override
@@ -24,8 +26,7 @@ class HomeInitialWidget extends StatelessWidget {
     return GetBuilder<FavoriteController>(
       builder: (controller) {
         if (controller.favMasjidList.isNotEmpty) {
-          final data = controller.favMasjidList.where((favmasjid) => DateTime.parse(favmasjid.dateTime!).formatted()==dateTime.formatted() ).toList();
-       //  final data = controller.favMasjidList;
+          final data = controller.favMasjidList;
           return _Favorites(
             data: data,
             pageController: pageController,
@@ -56,7 +57,6 @@ class _Favorites extends StatelessWidget {
         return _MasjidTile(
           index: index,
           masjid: data[index].masjid,
-          timetable: data[index].timetable,
           pageController: pageController,
         );
       },
@@ -99,123 +99,157 @@ class _EmptyWidget extends StatelessWidget {
   }
 }
 
-class _MasjidTile extends StatelessWidget {
+class _MasjidTile extends StatefulWidget {
   final PageController pageController;
   final int? index;
   final MasjidModel? masjid;
-  final TimetableModel? timetable;
   const _MasjidTile({
     this.index,
     this.masjid,
-    this.timetable,
     required this.pageController,
   });
 
   @override
+  State<_MasjidTile> createState() => _MasjidTileState();
+}
+
+class _MasjidTileState extends State<_MasjidTile> {
+  late TimetableBloc timetable;
+
+  @override
+  void initState() {
+    super.initState();
+    timetable = TimetableBloc()..add(GetTimetableEvent(widget.masjid!.id));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 10.h),
-      child: Container(
-        width: 374.w,
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 1, color: Color(0xFFEBEEF1)),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            onTap: () {
-              //  go to masjid
-              Navigator.pushNamed(context, RouteGenerator.masjid, arguments: {
-                'masjidmodel': masjid,
-                'pagecontroller': pageController
-              });
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 5),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CachedNetworkImage(
-                        height: 42.h,
-                        width: 42.w,
-                        imageUrl: masjid!.id.toString().toDevLogo(),
-                        imageBuilder: (context, imageProvider) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
-                        },
-                        placeholder: (_, url) =>
-                            AnimatedShimmer.round(size: 42.w),
-                        errorWidget: (context, url, err) {
-                          return Container(
-                            decoration:
-                                const BoxDecoration(shape: BoxShape.circle),
-                            child: Center(
-                              child: SvgPicture.asset(
-                                AssetConstants.defaults,
-                                fit: BoxFit.scaleDown,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(width: 8.w),
-                      SizedBox(
-                        width: 220.w,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Text(
-                                masjid!.name!,
-                                style: TextStyle(
-                                  fontSize: 22.sp,
-                                  fontFamily: 'QueenFont',
-                                  color: AppColor.brownColor,
-                                  height: 22.0.toFigmaHeight(24),
-                                  fontVariations: const [
-                                    FontVariation('wght', 700),
-                                  ],
+    return BlocProvider(
+      create: (BuildContext context) => timetable,
+      child: BlocListener<TimePickerBloc, DateTime?>(
+        listener: (context, state) {
+          if (state != null) {
+            timetable
+                .add(GetTimetableDateEvent(id: widget.masjid!.id, date: state));
+          }
+        },
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 10.h),
+          child: Container(
+            width: 374.w,
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(width: 1, color: Color(0xFFEBEEF1)),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: Material(
+              type: MaterialType.transparency,
+              child: InkWell(
+                onTap: () {
+                  //  go to masjid
+                  Navigator.pushNamed(context, RouteGenerator.masjid,
+                      arguments: {
+                        'masjidmodel': widget.masjid,
+                        'pagecontroller': widget.pageController
+                      });
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CachedNetworkImage(
+                            height: 42.h,
+                            width: 42.w,
+                            imageUrl: widget.masjid!.id.toString().toDevLogo(),
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
+                              );
+                            },
+                            placeholder: (_, url) =>
+                                AnimatedShimmer.round(size: 42.w),
+                            errorWidget: (context, url, err) {
+                              return Container(
+                                decoration:
+                                    const BoxDecoration(shape: BoxShape.circle),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    AssetConstants.defaults,
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(width: 8.w),
+                          SizedBox(
+                            width: 220.w,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Text(
+                                    widget.masjid!.name!,
+                                    style: TextStyle(
+                                      fontSize: 22.sp,
+                                      fontFamily: 'QueenFont',
+                                      color: AppColor.brownColor,
+                                      height: 22.0.toFigmaHeight(24),
+                                      fontVariations: const [
+                                        FontVariation('wght', 700),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(width: 8.w),
+                          GetBuilder<FavoriteController>(
+                              builder: (favouriteController) {
+                            return IconButton(
+                              onPressed: () {
+                                // remove favorite
+                                favouriteController
+                                    .removeFromFavourite(widget.masjid!);
+                              },
+                              icon: const Icon(Icons.star_rounded),
+                            );
+                          })
+                        ],
                       ),
-                      SizedBox(width: 8.w),
-                      GetBuilder<FavoriteController>(
-                          builder: (favouriteController) {
-                        return IconButton(
-                          onPressed: () {
-                            // remove favorite
-                            favouriteController.removeFromFavourite(
-                                masjid!, timetable!);
-                          },
-                          icon: const Icon(Icons.star_rounded),
+                    ),
+                    SizedBox(height: 12.h),
+                    BlocBuilder<TimetableBloc, FutureState>(
+                      builder: (context, state) {
+                        return state.when(
+                          idle: () => const TimetableInitialWidget(),
+                          loading: () => const TimetableInitialWidget(),
+                          failed: (err) => const TimetableInitialWidget(),
+                          data: (data) => TimetableDataWidget(
+                              snapshot: data,
+                              pagecontroller: widget.pageController),
                         );
-                      })
-                    ],
-                  ),
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(height: 12.h),
-                Center(child: TimetableDataWidget(snapshot: timetable!, pagecontroller: pageController,)),
-              ],
+              ),
             ),
           ),
         ),

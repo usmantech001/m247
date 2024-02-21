@@ -40,13 +40,14 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
       context: context,
       firstDate: DateTime.now(),
       lastDate: DateTime(4030),
+      initialDate: now,
     );
     if (date != null) {
       setState(() {
         now = date;
         widget.onSelected(date);
         int page = date.difference(DateTime.now()).inDays;
-        widget.controller.jumpToPage(page+1);
+        widget.controller.jumpToPage(page + 1);
       });
     }
   }
