@@ -30,6 +30,7 @@ bool checkPrayerTime(
 
   return false;
 }
+
 DateTime? checkForCorrectFormattingEndTime(String endTime) {
   if (endTime != ' PM' && endTime != ' AM' && endTime != 'Jamea') {
     if (endTime.contains('.')) {
@@ -45,8 +46,6 @@ DateTime? checkForCorrectFormattingEndTime(String endTime) {
   }
   return null;
 }
-
-
 
 DateTime checkForCorrectFormattingStartTime(String startTime) {
   if (startTime.contains('.')) {
@@ -128,13 +127,13 @@ String checkTheNumberOfJummuah({
       jummah2 != emptyString &&
       jummah3 != emptyString &&
       jummah4 != emptyString) {
-    return '$jummah1 / $jummah2 / $jummah3 / $jummah4';
+    return '$jummah1\n$jummah2\n$jummah3\n$jummah4';
   } else if (jummah1 != emptyString &&
       jummah2 != emptyString &&
       jummah3 != emptyString) {
-    return '$jummah1 / $jummah2 / $jummah3';
+    return '$jummah1\n$jummah2\n$jummah3';
   } else if (jummah1 != emptyString && jummah2 != emptyString) {
-    return '$jummah1 / $jummah2';
+    return '$jummah1\n$jummah2';
   } else if (jummah1 != emptyString) {
     return jummah1;
   } else {
@@ -147,7 +146,7 @@ bool checkIfTodayIsFridayAndJummuhIsNotEmpty({
   required String jummah,
 }) {
   String emptyString = '';
-  if (dateTime.weekday ==5) {
+  if (dateTime.weekday == 5) {
     if (jummah != emptyString) {
       return true;
     } else {
