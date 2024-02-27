@@ -9,7 +9,6 @@ class CustomErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300.h,
       child: Center(
         child: error is NetworkException ? Text(error!.message) : Text(error),
       ),

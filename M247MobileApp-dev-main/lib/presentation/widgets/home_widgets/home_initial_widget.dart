@@ -42,7 +42,7 @@ class HomeInitialWidget extends StatelessWidget {
 class _Favorites extends StatelessWidget {
   final List<FavoriteModel> data;
   final PageController pageController;
-   final DateTime dateTime;
+  final DateTime dateTime;
   const _Favorites({
     required this.data,
     required this.pageController,
@@ -107,13 +107,12 @@ class _MasjidTile extends StatefulWidget {
   final PageController pageController;
   final int? index;
   final MasjidModel? masjid;
-   final DateTime dateTime;
-  const _MasjidTile({
-    this.index,
-    this.masjid,
-    required this.pageController,
-    required this.dateTime
-  });
+  final DateTime dateTime;
+  const _MasjidTile(
+      {this.index,
+      this.masjid,
+      required this.pageController,
+      required this.dateTime});
 
   @override
   State<_MasjidTile> createState() => _MasjidTileState();
@@ -248,9 +247,9 @@ class _MasjidTileState extends State<_MasjidTile> {
                           loading: () => const TimetableInitialWidget(),
                           failed: (err) => const TimetableInitialWidget(),
                           data: (data) => TimetableDataWidget(
+                            snapshot: data,
                             dateTime: widget.dateTime,
-                              snapshot: data,
-                             ),
+                          ),
                         );
                       },
                     ),
