@@ -43,7 +43,6 @@ dependencies:
   speech_to_text:
   share_plus: ^7.2.2
 
-
   
   path_provider:
   url_launcher: 
