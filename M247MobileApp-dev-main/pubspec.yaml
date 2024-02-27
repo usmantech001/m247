@@ -37,15 +37,14 @@ dependencies:
   flutter_screenutil: null
 
 
-  cached_network_image: ^3.3.1
+  cached_network_image: 
   shared_preferences: ^2.2.2
   get: 
   speech_to_text:
   share_plus: ^7.2.2
 
 
-  hive:
-  hive_flutter:
+  
   path_provider:
   url_launcher: 
   dio_cache_interceptor: ^3.4.4

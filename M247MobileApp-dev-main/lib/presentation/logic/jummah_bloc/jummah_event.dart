@@ -6,7 +6,8 @@ abstract class JummahEvent {
 }
 
 class JummahInitialEvent extends JummahEvent {
-  const JummahInitialEvent();
+  final String? keyword;
+  const JummahInitialEvent(this.keyword);
 }
 
 class JummahDateEvent extends JummahEvent {

@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masjid/core/extension/datetime_extension.dart';
 import 'package:masjid/data/repository/masjid_repository.dart';
@@ -22,7 +22,7 @@ class JummahBloc extends Bloc<JummahEvent, FutureState> {
     emit(const FutureState.loading());
     try {
       DateTime date = DateTime.now();
-      const location = "preston";
+      final location = event.keyword ?? "preston";
       final result =
           await repository.getJummah(date: date.formatDay, keyword: location);
       emit(FutureState.data(data: result));

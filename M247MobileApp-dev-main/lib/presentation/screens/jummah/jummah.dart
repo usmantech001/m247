@@ -18,8 +18,9 @@ class Jummah extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("rebuilding widget");
     final jummahBloc = BlocProvider.of<JummahBloc>(context);
-    jummahBloc.add(const JummahInitialEvent());
+    jummahBloc.add(const JummahInitialEvent("preston"));
     return AnnotatedScaffold(
       body: Stack(
         children: <Widget>[
@@ -175,6 +176,18 @@ class Jummah extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
                       child: TextFormField(
                         controller: _controller,
+                        onSaved: (input) {
+                          debugPrint("on field saved");
+                        },
+                        onFieldSubmitted: (keyword) {
+                          debugPrint("on field submitted");
+                        },
+                        onChanged: (value) {
+                          if (value.length >= 3) {
+                            final keyword = value.toLowerCase();
+                            jummahBloc.add(JummahInitialEvent(keyword));
+                          }
+                        },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Find Town",
