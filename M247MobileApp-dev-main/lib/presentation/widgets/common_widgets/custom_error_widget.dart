@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:masjid/core/theme/app_theme.dart';
-import 'package:masjid/core/exports.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masjid/core/exceptions/network_exception.dart';
 
 class CustomErrorWidget extends StatelessWidget {
-  final String? error;
+  final dynamic error;
   const CustomErrorWidget({super.key, this.error});
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      error!,
-      style: TextStyle(
-        fontSize: 22.sp,
-        color: AppColor.brownColor,
-        fontWeight: FontWeight.w600,
-        fontFamily: AppTheme.SFProFont,
+    return SizedBox(
+      height: 300.h,
+      child: Center(
+        child: error is NetworkException ? Text(error!.message) : Text(error),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masjid/core/exceptions/network_exception.dart';
 import 'package:masjid/core/extension/datetime_extension.dart';
 import 'package:masjid/data/repository/masjid_repository.dart';
 import 'package:masjid/presentation/logic/bloc_state/future_state.dart';
@@ -23,6 +24,8 @@ class TimetableBloc extends Bloc<TimetableEvent, FutureState> {
       final result = await repository.getTimetable(
           id: event.id!.toString(), date: event.date!.formatDate);
       emit(FutureState.data(data: result));
+    } on NetworkException catch (e) {
+      emit(FutureState.failed(reason: e));
     } catch (e) {
       emit(FutureState.failed(reason: e.toString()));
     }
@@ -38,6 +41,8 @@ class TimetableBloc extends Bloc<TimetableEvent, FutureState> {
       final result = await repository.getTimetable(
           id: event.id.toString(), date: today.formatDate);
       emit(FutureState.data(data: result));
+    } on NetworkException catch (e) {
+      emit(FutureState.failed(reason: e));
     } catch (e) {
       emit(FutureState.failed(reason: e.toString()));
     }

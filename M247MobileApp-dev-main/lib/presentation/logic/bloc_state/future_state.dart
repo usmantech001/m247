@@ -10,5 +10,5 @@ class FutureState<T> with _$FutureState<T> {
 
   const factory FutureState.data({required T data}) = DATA;
 
-  const factory FutureState.failed({required String reason}) = FAILED;
+  const factory FutureState.failed({required dynamic reason}) = FAILED;
 }

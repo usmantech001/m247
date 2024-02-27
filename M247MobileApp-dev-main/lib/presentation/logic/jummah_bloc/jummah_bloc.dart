@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masjid/core/exceptions/network_exception.dart';
 import 'package:masjid/core/extension/datetime_extension.dart';
 import 'package:masjid/data/repository/masjid_repository.dart';
 import 'package:masjid/presentation/logic/jummah_bloc/jummah_event.dart';
@@ -26,8 +27,9 @@ class JummahBloc extends Bloc<JummahEvent, FutureState> {
       final result =
           await repository.getJummah(date: date.formatDay, keyword: location);
       emit(FutureState.data(data: result));
+    } on NetworkException catch (e) {
+      emit(FutureState.failed(reason: e));
     } catch (e) {
-      debugPrint("error $e");
       emit(FutureState.failed(reason: e.toString()));
     }
   }
@@ -44,6 +46,8 @@ class JummahBloc extends Bloc<JummahEvent, FutureState> {
         date: event.date!.formatDay,
       );
       emit(FutureState.data(data: result));
+    } on NetworkException catch (e) {
+      emit(FutureState.failed(reason: e));
     } catch (e) {
       emit(FutureState.failed(reason: e.toString()));
     }

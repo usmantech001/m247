@@ -2,18 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:masjid/core/exports.dart';
-import 'package:masjid/core/extension/string_extension.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:masjid/data/models/masjid_model.dart';
+import 'package:masjid/core/extension/string_extension.dart';
 import 'package:masjid/presentation/logic/masjid_bloc/masjid_bloc.dart';
 import 'package:masjid/presentation/logic/masjid_bloc/masjid_event.dart';
 import 'package:masjid/presentation/logic/timetable_bloc/timetable_bloc.dart';
 import 'package:masjid/presentation/logic/timetable_bloc/timetable_event.dart';
-import 'package:masjid/presentation/widgets/common_widgets/date_time_widget.dart';
-import 'package:masjid/presentation/widgets/masjid_widgets/masjid_intial_widget.dart';
 import 'package:masjid/presentation/widgets/mosque_widgets/button_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import '../../widgets/masjid_widgets/masjid_data_widget.dart';
+import 'package:masjid/presentation/widgets/common_widgets/date_time_widget.dart';
+import 'package:masjid/presentation/widgets/masjid_widgets/masjid_data_widget.dart';
+import 'package:masjid/presentation/widgets/masjid_widgets/masjid_intial_widget.dart';
 
 class Masjid extends StatefulWidget {
   final MasjidModel? masjid;
@@ -49,7 +48,7 @@ class _MasjidState extends State<Masjid> {
     masjid = MasjidBloc()..add(GetMasjidEvent(widget.masjid!.id!));
     timetable = TimetableBloc()..add(GetTimetableEvent(widget.masjid!.id));
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -361,12 +360,7 @@ class _MasjidState extends State<Masjid> {
                                 controller: Masjid._controller,
                                 dateTime: DateTime.now(),
                                 onSelected: (value) {
-                                  print('The date time is $value');
-                                  dateTime = value;
-                                  setState(() {
-                                    
-
-                                  });
+                                  setState(() {});
                                   timetable.add(GetTimetableDateEvent(
                                       id: widget.masjid!.id, date: value));
                                 },
@@ -440,24 +434,21 @@ class _MasjidState extends State<Masjid> {
                                       loading: () =>
                                           const MasjidInitialWidget(),
                                       data: (data) => MasjidDataWidget(
-                                        dateTime:dateTime,
+                                          dateTime: dateTime,
                                           snapshot: data,
                                           pagecontroller: Masjid._controller),
-                                      failed: (err) => const CustomErrorWidget(
-                                        error:
-                                            'No internet connection, please connect to the internet',
-                                      ),
+                                      failed: (err) =>
+                                          CustomErrorWidget(error: err),
                                     );
                                   },
                                 ),
                               ),
-
-                              /*  SizedBox(height: 19.h),
+                              SizedBox(height: 19.h),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 40.w),
                                 child: Center(
                                   child: Text(
-                                    "The masjid is at the heart of London and can accomodate large amount of people.",
+                                    widget.masjid!.freeText ?? '',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 14.sp,
@@ -467,9 +458,8 @@ class _MasjidState extends State<Masjid> {
                                     ),
                                   ),
                                 ),
-                              ), */
-
-                              //SizedBox(height: 100.h),
+                              ),
+                              SizedBox(height: 100.h),
                             ],
                           ),
                         ),

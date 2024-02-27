@@ -187,12 +187,6 @@ class _JummahState extends State<Jummah> {
                         controller: _controller,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.search,
-                        onSaved: (input) {
-                          debugPrint("on field saved");
-                        },
-                        onFieldSubmitted: (keyword) {
-                          debugPrint("on field submitted");
-                        },
                         onChanged: (value) {
                           if (value.length >= 3) {
                             final keyword = value.toLowerCase();
@@ -339,9 +333,8 @@ class _JummahState extends State<Jummah> {
                                   idle: () => const JummahLoadingWidget(),
                                   loading: () => const JummahLoadingWidget(),
                                   data: (data) => JummahDataWidget(data: data),
-                                  failed: (err) => const CustomErrorWidget(
-                                      error:
-                                          'No internet connection, please connect to the internet'),
+                                  failed: (err) =>
+                                      CustomErrorWidget(error: err),
                                 );
                               },
                             ),

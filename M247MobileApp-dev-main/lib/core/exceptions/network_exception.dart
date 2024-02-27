@@ -64,8 +64,10 @@ class NetworkException with _$NetworkException {
 
   static NetworkException getDioException(Exception error) {
     debugPrint('from get exception ${error.toString()}');
+
     try {
       if (error is DioException) {
+        debugPrint('exception type ${error.type}');
         switch (error.type) {
           case DioExceptionType.cancel:
             return const NetworkException.cancelException(
@@ -135,10 +137,10 @@ class NetworkException with _$NetworkException {
         name: ExceptionConstants.formatException,
         message: e.message,
       );
-    } on Exception catch (_) {
-      return const NetworkException.unrecognizedException(
+    } on Exception catch (e) {
+      return NetworkException.unrecognizedException(
+        message: e.toString(),
         name: ExceptionConstants.unrecognizedException,
-        message: 'Error unrecognized',
       );
     }
   }
