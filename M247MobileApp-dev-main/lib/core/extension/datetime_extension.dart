@@ -7,7 +7,7 @@ extension DateTimeExtension on DateTime {
   String get formatDay => DateFormat('yyyy/M/d').format(this);
 
   String formatted() {
-    final DateFormat format = DateFormat('EEE, dd MMM');
+    final DateFormat format = DateFormat('MMM dd, yyyy');
     return format.format(this);
   }
 

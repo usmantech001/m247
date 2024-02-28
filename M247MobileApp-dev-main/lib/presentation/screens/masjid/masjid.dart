@@ -364,9 +364,8 @@ class _MasjidState extends State<Masjid> {
                                   print('The date time is $value');
                                   dateTime = value;
                                   setState(() {
-                                    
-
                                   });
+                                //  widget.masjid.
                                   timetable.add(GetTimetableDateEvent(
                                       id: widget.masjid!.id, date: value));
                                 },

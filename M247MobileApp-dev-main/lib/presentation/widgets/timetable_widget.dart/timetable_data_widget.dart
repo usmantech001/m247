@@ -25,9 +25,7 @@ class TimetableDataWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                snapshot.sehriEnd!.isEmpty
-                    ? Container()
-                    : _EventTile(
+             _EventTile(
                         name: "Sehri",
                         selected: snapshot.sehriEnd!.isEmpty
                             ? false
