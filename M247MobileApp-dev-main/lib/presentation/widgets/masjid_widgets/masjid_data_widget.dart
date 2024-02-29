@@ -45,10 +45,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             startAMPM: widget.snapshot.begFajr!.isEmpty ? '' : am,
             endAMPM: widget.snapshot.jamFajr!.isEmpty ? '' : am,
             name: "Fajr",
-            selected: widget.snapshot.begFajr!.isEmpty ||
-                    widget.snapshot.jamFajr!.isEmpty
-                ? false
-                : checkPrayerTime(
+            selected: checkForNextPrayer(
                     startTime: '${widget.snapshot.begFajr} $am',
                     endTime: '${widget.snapshot.jamFajr} $am',
                     pagecontroller: widget.pagecontroller),
@@ -59,10 +56,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             name: "Sunrise",
             startAMPM: widget.snapshot.sunset!.isEmpty ? '' : am,
             endAMPM: '',
-            selected: widget.snapshot.sunrise!.isEmpty ||
-                    widget.snapshot.sunset!.isEmpty
-                ? false
-                : checkPrayerTime(
+            selected: checkForNextPrayer(
                     startTime: '${widget.snapshot.sunset} $am',
                     endTime: '${widget.snapshot.sunrise} $am',
                     pagecontroller: widget.pagecontroller),
@@ -77,10 +71,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                   name: "Jummah",
                   startAMPM: '',
                   endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
-                  selected: widget.snapshot.jummah2!.isEmpty ||
-                          widget.snapshot.jummah2!.isEmpty
-                      ? false
-                      : checkPrayerTime(
+                  selected:checkForNextPrayer(
                           startTime: '${widget.snapshot.jummah1} $pm',
                           endTime: '${widget.snapshot.jummah1} $pm',
                           pagecontroller: widget.pagecontroller),
@@ -91,10 +82,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                   name: "Dhuhr",
                   startAMPM: widget.snapshot.begDhuhr!.isEmpty ? '' : pm,
                   endAMPM: widget.snapshot.jamDhuhr!.isEmpty ? '' : pm,
-                  selected: widget.snapshot.begDhuhr!.isEmpty ||
-                          widget.snapshot.jamDhuhr!.isEmpty
-                      ? false
-                      : checkPrayerTime(
+                  selected: checkForNextPrayer(
                           startTime: '${widget.snapshot.begDhuhr} $pm',
                           endTime: '${widget.snapshot.jamDhuhr} $pm',
                           pagecontroller: widget.pagecontroller),
@@ -109,10 +97,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                   name: "Jummah 2",
                   startAMPM: '',
                   endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
-                  selected: widget.snapshot.jummah2!.isEmpty ||
-                          widget.snapshot.jummah2!.isEmpty
-                      ? false
-                      : checkPrayerTime(
+                  selected: checkForNextPrayer(
                           startTime: '${widget.snapshot.jummah1} $pm',
                           endTime: '${widget.snapshot.jummah2} $pm',
                           pagecontroller: widget.pagecontroller),
@@ -128,10 +113,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                   name: "Jummah 3",
                   startAMPM: '',
                   endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
-                  selected: widget.snapshot.jummah2!.isEmpty ||
-                          widget.snapshot.jummah2!.isEmpty
-                      ? false
-                      : checkPrayerTime(
+                  selected: checkForNextPrayer(
                           startTime: '${widget.snapshot.jummah2} $pm',
                           endTime: '${widget.snapshot.jummah3} $pm',
                           pagecontroller: widget.pagecontroller),
@@ -147,10 +129,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                   name: "Jummah 4",
                   startAMPM: '',
                   endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
-                  selected: widget.snapshot.jummah2!.isEmpty ||
-                          widget.snapshot.jummah2!.isEmpty
-                      ? false
-                      : checkPrayerTime(
+                  selected: checkForNextPrayer(
                           startTime: '${widget.snapshot.jummah3} $pm',
                           endTime: '${widget.snapshot.jummah4} $pm',
                           pagecontroller: widget.pagecontroller),
@@ -162,10 +141,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             name: "Asr",
             startAMPM: widget.snapshot.begAsar!.isEmpty ? '' : pm,
             endAMPM: widget.snapshot.jamAsar!.isEmpty ? '' : pm,
-            selected: widget.snapshot.begAsar!.isEmpty ||
-                    widget.snapshot.jamAsar!.isEmpty
-                ? false
-                : checkPrayerTime(
+            selected: checkForNextPrayer(
                     startTime: '${widget.snapshot.begAsar} $pm',
                     endTime: '${widget.snapshot.jamAsar} $pm',
                     pagecontroller: widget.pagecontroller),
@@ -176,10 +152,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             name: "Maghrib",
             startAMPM: '',
             endAMPM: widget.snapshot.jamMaghrib!.isEmpty ? '' : pm,
-            selected: widget.snapshot.sunset!.isEmpty ||
-                    widget.snapshot.jamMaghrib!.isEmpty
-                ? false
-                : checkPrayerTime(
+            selected: checkForNextPrayer(
                     startTime: '${widget.snapshot.sunset} $pm',
                     endTime: '${widget.snapshot.jamMaghrib} $pm',
                     pagecontroller: widget.pagecontroller),
@@ -190,10 +163,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             name: "Isha",
             startAMPM: widget.snapshot.begEsha!.isEmpty ? '' : pm,
             endAMPM: widget.snapshot.jamEsha!.isEmpty ? '' : pm,
-            selected: widget.snapshot.begEsha!.isEmpty ||
-                    widget.snapshot.jamEsha!.isEmpty
-                ? false
-                : checkPrayerTime(
+            selected: checkForNextPrayer(
                     startTime: '${widget.snapshot.begEsha} $pm',
                     endTime: '${widget.snapshot.jamEsha} $pm',
                     eshaEndTime: '${widget.snapshot.jamEsha} $pm',

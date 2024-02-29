@@ -33,7 +33,7 @@ bool checkPrayerTime(
   return false;
 }
 
-checkForNextPrayer({required String startTime,
+bool checkForNextPrayer({required String startTime,
     required String endTime,
     String eshaEndTime = '',
     PageController? pagecontroller}){
@@ -45,13 +45,16 @@ checkForNextPrayer({required String startTime,
   final endTimeHour = checkForCorrectFormattingEndTime(endTime);
 
   if(checkPrayerTime(startTime: startTime, endTime: endTime)==false){
-    if(nowAMorPM == startAMorPM && endTimeHour != null){
-      if(now.isBefore(startTimeHour)){
-        
+    if(nowAMorPM == startAMorPM){
+      if(startTimeHour.isAfter(now)){
+        return true;
+      }else{
+        return false;
       }
     }
-
+    
   }
+  return checkPrayerTime(startTime: startTime, endTime: endTime);
 }
 
 DateTime? checkForCorrectFormattingEndTime(String endTime) {
@@ -71,7 +74,8 @@ DateTime? checkForCorrectFormattingEndTime(String endTime) {
 }
 
 DateTime checkForCorrectFormattingStartTime(String startTime) {
-  if (startTime.contains('.')) {
+  if(startTime != ' PM' && startTime != ' AM' && startTime != 'Jamea'){
+      if (startTime.contains('.')) {
     String formattedStartTime = startTime.replaceAll('.', ':');
     return DateFormat('h:mm a').parse(formattedStartTime);
   } else {
@@ -81,6 +85,8 @@ DateTime checkForCorrectFormattingStartTime(String startTime) {
       return DateFormat('h:mm a').parse("0:00 PM");
     }
   }
+  }
+  return DateFormat('h:mm a').parse("0:00$startTime");
 }
 
 checkIfEshaHasEnd({
