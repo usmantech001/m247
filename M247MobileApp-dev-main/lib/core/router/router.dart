@@ -16,13 +16,15 @@ class RouteGenerator {
       case home:
         return _routeBuilder(const Home());
       case jummah:
-      final pageController = settings.arguments as PageController;
-        return _routeBuilder( Jummah(pageController: pageController,));
+        final controller = settings.arguments as PageController;
+        return _routeBuilder(Jummah(controller: controller));
       case masjid:
-      
         final data = settings.arguments as Map<String, dynamic>;
-        //final pageController = settings.arguments as PageController;
-        return _routeBuilder(Masjid(masjid: data['masjidmodel'], pageController:data['pagecontroller']));
+        return _routeBuilder(
+          Masjid(
+              masjid: data['masjidmodel'],
+              pageController: data['pagecontroller']),
+        );
       default:
         return _routeBuilder(const Home());
     }
@@ -34,18 +36,19 @@ class RouteGenerator {
 
   static PageRouteBuilder _routeBuilder(Widget page) {
     return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => page,
-        transitionsBuilder: (_, animation, __, child) {
-          const begin = 0.0;
-          const end = 1.0;
-          const curve = Curves.easeInOut;
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (_, animation, __, child) {
+        const begin = 0.0;
+        const end = 1.0;
+        const curve = Curves.easeInOut;
 
-          final tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        final tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-          final fadeAnimation = animation.drive(tween);
+        final fadeAnimation = animation.drive(tween);
 
-          return FadeTransition(opacity: fadeAnimation, child: child);
-        });
+        return FadeTransition(opacity: fadeAnimation, child: child);
+      },
+    );
   }
 }

@@ -21,7 +21,7 @@ mixin _$FutureState<T> {
     required TResult Function() idle,
     required TResult Function() loading,
     required TResult Function(T data) data,
-    required TResult Function(String reason) failed,
+    required TResult Function(dynamic reason) failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,7 +29,7 @@ mixin _$FutureState<T> {
     TResult? Function()? idle,
     TResult? Function()? loading,
     TResult? Function(T data)? data,
-    TResult? Function(String reason)? failed,
+    TResult? Function(dynamic reason)? failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,7 +37,7 @@ mixin _$FutureState<T> {
     TResult Function()? idle,
     TResult Function()? loading,
     TResult Function(T data)? data,
-    TResult Function(String reason)? failed,
+    TResult Function(dynamic reason)? failed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -125,7 +125,7 @@ class _$IDLE<T> implements IDLE<T> {
     required TResult Function() idle,
     required TResult Function() loading,
     required TResult Function(T data) data,
-    required TResult Function(String reason) failed,
+    required TResult Function(dynamic reason) failed,
   }) {
     return idle();
   }
@@ -136,7 +136,7 @@ class _$IDLE<T> implements IDLE<T> {
     TResult? Function()? idle,
     TResult? Function()? loading,
     TResult? Function(T data)? data,
-    TResult? Function(String reason)? failed,
+    TResult? Function(dynamic reason)? failed,
   }) {
     return idle?.call();
   }
@@ -147,7 +147,7 @@ class _$IDLE<T> implements IDLE<T> {
     TResult Function()? idle,
     TResult Function()? loading,
     TResult Function(T data)? data,
-    TResult Function(String reason)? failed,
+    TResult Function(dynamic reason)? failed,
     required TResult orElse(),
   }) {
     if (idle != null) {
@@ -239,7 +239,7 @@ class _$LOADING<T> implements LOADING<T> {
     required TResult Function() idle,
     required TResult Function() loading,
     required TResult Function(T data) data,
-    required TResult Function(String reason) failed,
+    required TResult Function(dynamic reason) failed,
   }) {
     return loading();
   }
@@ -250,7 +250,7 @@ class _$LOADING<T> implements LOADING<T> {
     TResult? Function()? idle,
     TResult? Function()? loading,
     TResult? Function(T data)? data,
-    TResult? Function(String reason)? failed,
+    TResult? Function(dynamic reason)? failed,
   }) {
     return loading?.call();
   }
@@ -261,7 +261,7 @@ class _$LOADING<T> implements LOADING<T> {
     TResult Function()? idle,
     TResult Function()? loading,
     TResult Function(T data)? data,
-    TResult Function(String reason)? failed,
+    TResult Function(dynamic reason)? failed,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -378,7 +378,7 @@ class _$DATA<T> implements DATA<T> {
     required TResult Function() idle,
     required TResult Function() loading,
     required TResult Function(T data) data,
-    required TResult Function(String reason) failed,
+    required TResult Function(dynamic reason) failed,
   }) {
     return data(this.data);
   }
@@ -389,7 +389,7 @@ class _$DATA<T> implements DATA<T> {
     TResult? Function()? idle,
     TResult? Function()? loading,
     TResult? Function(T data)? data,
-    TResult? Function(String reason)? failed,
+    TResult? Function(dynamic reason)? failed,
   }) {
     return data?.call(this.data);
   }
@@ -400,7 +400,7 @@ class _$DATA<T> implements DATA<T> {
     TResult Function()? idle,
     TResult Function()? loading,
     TResult Function(T data)? data,
-    TResult Function(String reason)? failed,
+    TResult Function(dynamic reason)? failed,
     required TResult orElse(),
   }) {
     if (data != null) {
@@ -462,7 +462,7 @@ abstract class _$$FAILEDCopyWith<T, $Res> {
           _$FAILED<T> value, $Res Function(_$FAILED<T>) then) =
       __$$FAILEDCopyWithImpl<T, $Res>;
   @useResult
-  $Res call({String reason});
+  $Res call({dynamic reason});
 }
 
 /// @nodoc
@@ -475,13 +475,13 @@ class __$$FAILEDCopyWithImpl<T, $Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reason = null,
+    Object? reason = freezed,
   }) {
     return _then(_$FAILED<T>(
-      reason: null == reason
+      reason: freezed == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
     ));
   }
 }
@@ -492,7 +492,7 @@ class _$FAILED<T> implements FAILED<T> {
   const _$FAILED({required this.reason});
 
   @override
-  final String reason;
+  final dynamic reason;
 
   @override
   String toString() {
@@ -504,11 +504,12 @@ class _$FAILED<T> implements FAILED<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FAILED<T> &&
-            (identical(other.reason, reason) || other.reason == reason));
+            const DeepCollectionEquality().equals(other.reason, reason));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, reason);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(reason));
 
   @JsonKey(ignore: true)
   @override
@@ -522,7 +523,7 @@ class _$FAILED<T> implements FAILED<T> {
     required TResult Function() idle,
     required TResult Function() loading,
     required TResult Function(T data) data,
-    required TResult Function(String reason) failed,
+    required TResult Function(dynamic reason) failed,
   }) {
     return failed(reason);
   }
@@ -533,7 +534,7 @@ class _$FAILED<T> implements FAILED<T> {
     TResult? Function()? idle,
     TResult? Function()? loading,
     TResult? Function(T data)? data,
-    TResult? Function(String reason)? failed,
+    TResult? Function(dynamic reason)? failed,
   }) {
     return failed?.call(reason);
   }
@@ -544,7 +545,7 @@ class _$FAILED<T> implements FAILED<T> {
     TResult Function()? idle,
     TResult Function()? loading,
     TResult Function(T data)? data,
-    TResult Function(String reason)? failed,
+    TResult Function(dynamic reason)? failed,
     required TResult orElse(),
   }) {
     if (failed != null) {
@@ -592,9 +593,9 @@ class _$FAILED<T> implements FAILED<T> {
 }
 
 abstract class FAILED<T> implements FutureState<T> {
-  const factory FAILED({required final String reason}) = _$FAILED<T>;
+  const factory FAILED({required final dynamic reason}) = _$FAILED<T>;
 
-  String get reason;
+  dynamic get reason;
   @JsonKey(ignore: true)
   _$$FAILEDCopyWith<T, _$FAILED<T>> get copyWith =>
       throw _privateConstructorUsedError;

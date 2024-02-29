@@ -5,20 +5,41 @@ import 'package:masjid/presentation/widgets/timechecker/timechecker.dart';
 
 class JummahDataWidget extends StatelessWidget {
   final List<JummahModel> data;
-  const JummahDataWidget({super.key, required this.data});
+  const JummahDataWidget({
+    super.key,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: data.length,
-        itemBuilder: (_, index) {
-          return _JummahTile(snapshot: data[index]);
-        },
+      child: data.isEmpty
+          ? const _JummahEmptyWidget()
+          : ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: data.length,
+              itemBuilder: (_, index) {
+                return _JummahTile(snapshot: data[index]);
+              },
+            ),
+    );
+  }
+}
+
+class _JummahEmptyWidget extends StatelessWidget {
+  const _JummahEmptyWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 300.h,
+      child: const Center(
+        child: Text(
+          "Design Jummah Empty Widget",
+        ),
       ),
     );
   }

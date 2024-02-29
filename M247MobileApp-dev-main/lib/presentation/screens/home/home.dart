@@ -190,6 +190,7 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
                       child: TextFormField(
                         controller: _controller,
+                        textInputAction: TextInputAction.search,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Search & Add Masjid",
@@ -239,13 +240,12 @@ class _HomeState extends State<Home> {
                           children: [
                             SizedBox(height: 10.h),
                             DateTimeWidget(
+                             
                               controller: _pagecontroller,
                               dateTime: DateTime.now(),
                               onSelected: (value) {
                                 dateTime = value;
-                                setState(() {
-                                  
-                                });
+                                setState(() {});
                                 // change datetime and timetable search
                                 timeBloc.add(SelectedTimeEvent(value));
                               },

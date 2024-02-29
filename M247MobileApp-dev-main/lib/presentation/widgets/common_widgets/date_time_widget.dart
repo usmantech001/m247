@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:masjid/core/exports.dart';
 import 'package:masjid/core/extension/datetime_extension.dart';
+import 'package:masjid/data/models/masjid_model.dart';
+import 'package:masjid/presentation/screens/masjid/masjid.dart';
+import 'package:masjid/presentation/widgets/timechecker/timechecker.dart';
 
 class DateTimeWidget extends StatefulWidget {
-  final DateTime dateTime;
+   DateTime dateTime;
   final PageController controller;
   final bool isFromHome;
+  final MasjidModel? masjid;
   final void Function(DateTime date) onSelected;
-  const DateTimeWidget({
+   DateTimeWidget({
     super.key,
     required this.dateTime,
     required this.onSelected,
     required this.controller,
+     this.masjid,
     this.isFromHome = true,
   });
 
@@ -27,24 +32,25 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
     super.initState();
     ranges = generate();
   }
-
-  DateTime now = DateTime.now();
+  
+  
+  
 
   List<DateTime> generate() {
-    final list = List.generate(50, (index) => now.add(Duration(days: index)));
+    final list = List.generate(50, (index) => widget.dateTime.add(Duration(days: index)));
     return list;
   }
 
-  _selectDate(context) async {
+  _selectDate(context, dateTime) async {
     DateTime? date = await showDatePicker(
       context: context,
       firstDate: DateTime.now(),
       lastDate: DateTime(4030),
-      initialDate: now,
+      initialDate: dateTime,
     );
     if (date != null) {
       setState(() {
-        now = date;
+        dateTime = date;
         widget.onSelected(date);
         int page = date.difference(DateTime.now()).inDays;
         widget.controller.jumpToPage(page + 1);
@@ -55,6 +61,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
   int initialPage = 0;
   @override
   Widget build(BuildContext context) {
+   // DateTime now = widget.dateTime;
     return Container(
       height: 60.h,
       width: MediaQuery.of(context).size.width,
@@ -101,8 +108,8 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
                 physics: const NeverScrollableScrollPhysics(),
                 onPageChanged: (index) {
                   widget.onSelected(ranges[index]);
-                  now = ranges[index];
-                 print('The updated date is $now');
+                  widget.dateTime = ranges[index];
+             
                   setState(() {});
                 },
                 itemBuilder: (context, index) {
@@ -113,10 +120,10 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          _selectDate(context);
+                          _selectDate(context, widget.dateTime);
                         },
                         child: Text(
-                          now.formatted(),
+                          widget.dateTime.formatted(),
                           style: TextStyle(
                             fontFamily: 'SFPro',
                             fontSize: 14.sp,
@@ -131,7 +138,7 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
                       widget.isFromHome
                           ? Container()
                           : Text(
-                              now.toIslamic(),
+                              widget.dateTime.toIslamic(),
                               style: TextStyle(
                                 fontFamily: 'SFPro',
                                 fontSize: 14.sp,

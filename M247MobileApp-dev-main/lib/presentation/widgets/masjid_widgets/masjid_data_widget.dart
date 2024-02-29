@@ -7,8 +7,12 @@ class MasjidDataWidget extends StatefulWidget {
   final TimetableModel snapshot;
   final PageController pagecontroller;
   final DateTime dateTime;
-  const MasjidDataWidget(
-      {super.key, required this.snapshot, required this.pagecontroller, required this.dateTime});
+  const MasjidDataWidget({
+    super.key,
+    required this.snapshot,
+    required this.pagecontroller,
+    required this.dateTime,
+  });
 
   @override
   State<MasjidDataWidget> createState() => _MasjidDataWidgetState();
@@ -25,20 +29,18 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
       eshaEndTime: '${widget.snapshot.jamEsha} PM',
     );
   }
- 
 
   @override
   Widget build(BuildContext context) {
     String pm = 'PM';
     String am = 'AM';
-   // print('The current date is ${generate[widget.pagecontroller.page!.toInt()]}');
+    // print('The current date is ${generate[widget.pagecontroller.page!.toInt()]}');
 
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: Column(
         children: [
-          
           _EventTile(
             startAMPM: widget.snapshot.begFajr!.isEmpty ? '' : am,
             endAMPM: widget.snapshot.jamFajr!.isEmpty ? '' : am,
@@ -68,11 +70,11 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             startTime: widget.snapshot.sunrise,
           ),
           checkIfTodayIsFridayAndJummuhIsNotEmpty(
-            dateTime: widget.dateTime,
+                      dateTime: widget.dateTime,
                       jummah: widget.snapshot.jummah1 ?? '') ==
                   true
               ? _EventTile(
-                  name: "Jummah 1",
+                  name: "Jummah",
                   startAMPM: '',
                   endAMPM: widget.snapshot.jummah2!.isEmpty ? '' : pm,
                   selected: widget.snapshot.jummah2!.isEmpty ||
@@ -100,7 +102,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                   startTime: widget.snapshot.begDhuhr,
                 ),
           checkIfTodayIsFridayAndJummuhIsNotEmpty(
-            dateTime: widget.dateTime,
+                      dateTime: widget.dateTime,
                       jummah: widget.snapshot.jummah2 ?? '') ==
                   true
               ? _EventTile(
@@ -119,7 +121,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                 )
               : Container(),
           checkIfTodayIsFridayAndJummuhIsNotEmpty(
-            dateTime:widget.dateTime,
+                      dateTime: widget.dateTime,
                       jummah: widget.snapshot.jummah3 ?? '') ==
                   true
               ? _EventTile(
@@ -138,7 +140,7 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
                 )
               : Container(),
           checkIfTodayIsFridayAndJummuhIsNotEmpty(
-            dateTime: widget.dateTime,
+                      dateTime: widget.dateTime,
                       jummah: widget.snapshot.jummah4 ?? '') ==
                   true
               ? _EventTile(

@@ -7,20 +7,29 @@ import 'package:masjid/presentation/widgets/common_widgets/date_time_widget.dart
 import 'package:masjid/presentation/widgets/jummah_widgets/jummah_data_widget.dart';
 import 'package:masjid/presentation/widgets/jummah_widgets/jummah_loading_widget.dart';
 
-class Jummah extends StatelessWidget {
-  final PageController pageController;
-  const Jummah({
-    super.key,
-    required this.pageController,
-  });
+class Jummah extends StatefulWidget {
+  final PageController? controller;
+  const Jummah({super.key, this.controller});
 
-  static final _controller = TextEditingController();
+  @override
+  State<Jummah> createState() => _JummahState();
+}
+
+class _JummahState extends State<Jummah> {
+  //
+  late final JummahBloc jummahBloc;
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+    jummahBloc = BlocProvider.of<JummahBloc>(context);
+    jummahBloc.add(const JummahInitialEvent("preston"));
+  }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("rebuilding widget");
-    final jummahBloc = BlocProvider.of<JummahBloc>(context);
-    jummahBloc.add(const JummahInitialEvent("preston"));
     return AnnotatedScaffold(
       body: Stack(
         children: <Widget>[
@@ -176,12 +185,8 @@ class Jummah extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
                       child: TextFormField(
                         controller: _controller,
-                        onSaved: (input) {
-                          debugPrint("on field saved");
-                        },
-                        onFieldSubmitted: (keyword) {
-                          debugPrint("on field submitted");
-                        },
+                        keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.search,
                         onChanged: (value) {
                           if (value.length >= 3) {
                             final keyword = value.toLowerCase();
@@ -228,7 +233,7 @@ class Jummah extends StatelessWidget {
                       child: Column(
                         children: [
                           DateTimeWidget(
-                              controller: pageController,
+                              controller: widget.controller!,
                               dateTime: DateTime.now(),
                               onSelected: (value) {
                                 jummahBloc.add(
@@ -328,9 +333,8 @@ class Jummah extends StatelessWidget {
                                   idle: () => const JummahLoadingWidget(),
                                   loading: () => const JummahLoadingWidget(),
                                   data: (data) => JummahDataWidget(data: data),
-                                  failed: (err) => const CustomErrorWidget(
-                                      error:
-                                          'No internet connection, please connect to the internet'),
+                                  failed: (err) =>
+                                      CustomErrorWidget(error: err),
                                 );
                               },
                             ),

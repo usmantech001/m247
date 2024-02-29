@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:masjid/core/constants/app_constant.dart';
 import 'package:masjid/core/extension/datetime_extension.dart';
+import 'package:masjid/data/models/masjid_model.dart';
 
 bool checkPrayerTime(
     {required String startTime,
     required String endTime,
     String eshaEndTime = '',
-    PageController? pagecontroller}) {
+    PageController? pagecontroller}
+    ) {
   DateTime now = DateTime.now();
   final nowAMorPM = DateFormat('a').format(now);
   final startTimeHour = checkForCorrectFormattingStartTime(startTime);
@@ -30,6 +32,28 @@ bool checkPrayerTime(
 
   return false;
 }
+
+checkForNextPrayer({required String startTime,
+    required String endTime,
+    String eshaEndTime = '',
+    PageController? pagecontroller}){
+      DateTime now = DateTime.now();
+  final nowAMorPM = DateFormat('a').format(now);
+  final startTimeHour = checkForCorrectFormattingStartTime(startTime);
+
+  final startAMorPM = DateFormat('a').format(startTimeHour);
+  final endTimeHour = checkForCorrectFormattingEndTime(endTime);
+
+  if(checkPrayerTime(startTime: startTime, endTime: endTime)==false){
+    if(nowAMorPM == startAMorPM && endTimeHour != null){
+      if(now.isBefore(startTimeHour)){
+        
+      }
+    }
+
+  }
+}
+
 DateTime? checkForCorrectFormattingEndTime(String endTime) {
   if (endTime != ' PM' && endTime != ' AM' && endTime != 'Jamea') {
     if (endTime.contains('.')) {
@@ -45,8 +69,6 @@ DateTime? checkForCorrectFormattingEndTime(String endTime) {
   }
   return null;
 }
-
-
 
 DateTime checkForCorrectFormattingStartTime(String startTime) {
   if (startTime.contains('.')) {
@@ -128,13 +150,13 @@ String checkTheNumberOfJummuah({
       jummah2 != emptyString &&
       jummah3 != emptyString &&
       jummah4 != emptyString) {
-    return '$jummah1 / $jummah2 / $jummah3 / $jummah4';
+    return '$jummah1\n$jummah2\n$jummah3\n$jummah4';
   } else if (jummah1 != emptyString &&
       jummah2 != emptyString &&
       jummah3 != emptyString) {
-    return '$jummah1 / $jummah2 / $jummah3';
+    return '$jummah1\n$jummah2\n$jummah3';
   } else if (jummah1 != emptyString && jummah2 != emptyString) {
-    return '$jummah1 / $jummah2';
+    return '$jummah1\n$jummah2';
   } else if (jummah1 != emptyString) {
     return jummah1;
   } else {
@@ -147,7 +169,7 @@ bool checkIfTodayIsFridayAndJummuhIsNotEmpty({
   required String jummah,
 }) {
   String emptyString = '';
-  if (dateTime.weekday ==5) {
+  if (dateTime.weekday == 5) {
     if (jummah != emptyString) {
       return true;
     } else {
@@ -155,4 +177,17 @@ bool checkIfTodayIsFridayAndJummuhIsNotEmpty({
     }
   }
   return false;
+}
+
+DateTime chechForHijriAdjustment(MasjidModel masjid){
+  DateTime now = DateTime.now();
+  if(masjid.hijriDateAdjustment==0){
+   return now;
+  }else if (masjid.hijriDateAdjustment== -1) {
+    return now.subtract(const Duration(days: 1));
+  }else if(masjid.hijriDateAdjustment==1){
+    return now.add(const Duration(days: 1));
+  }else{
+    return now;
+  }
 }
