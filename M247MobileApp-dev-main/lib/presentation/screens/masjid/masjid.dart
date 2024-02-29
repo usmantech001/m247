@@ -357,6 +357,7 @@ class _MasjidState extends State<Masjid> {
                           child: Column(
                             children: [
                               DateTimeWidget(
+                                masjid:widget.masjid,
                                 isFromHome: false,
                                 controller: Masjid._controller,
                                 dateTime:widget.masjid!=null? chechForHijriAdjustment(widget.masjid!):DateTime.now(),

@@ -35,12 +35,24 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
     String pm = 'PM';
     String am = 'AM';
     // print('The current date is ${generate[widget.pagecontroller.page!.toInt()]}');
-
+   
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: Column(
         children: [
+          
+          _EventTile(
+            startAMPM: '' ,
+            endAMPM: widget.snapshot.sehriEnd!.isEmpty ? '' : am,
+            name: "Sehri",
+            selected: checkForNextPrayer(
+                    startTime: ' $am',
+                    endTime: '${widget.snapshot.sehriEnd} $am',
+                    pagecontroller: widget.pagecontroller),
+            endTime: widget.snapshot.sehriEnd,
+            startTime: '- -',
+          ),
           _EventTile(
             startAMPM: widget.snapshot.begFajr!.isEmpty ? '' : am,
             endAMPM: widget.snapshot.jamFajr!.isEmpty ? '' : am,
@@ -166,7 +178,9 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             selected: checkForNextPrayer(
                     startTime: '${widget.snapshot.sunset} $pm',
                     endTime: '${widget.snapshot.jamMaghrib} $pm',
-                    pagecontroller: widget.pagecontroller),
+                    pagecontroller: widget.pagecontroller,
+                    
+                    ),
             endTime: widget.snapshot.jamMaghrib,
             startTime: '',
           ),
