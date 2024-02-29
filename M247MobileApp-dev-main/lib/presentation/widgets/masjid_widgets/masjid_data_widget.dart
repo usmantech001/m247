@@ -63,6 +63,17 @@ class _MasjidDataWidgetState extends State<MasjidDataWidget> {
             endTime: '',
             startTime: widget.snapshot.sunrise,
           ),
+          _EventTile(
+            name: "Noon",
+            startAMPM: widget.snapshot.noon!.isEmpty ? '' : am,
+            endAMPM: '',
+            selected: checkForNextPrayer(
+                    startTime: '${widget.snapshot.noon} $am',
+                    endTime: ' $am',
+                    pagecontroller: widget.pagecontroller),
+            endTime: '',
+            startTime: widget.snapshot.noon,
+          ),
           checkIfTodayIsFridayAndJummuhIsNotEmpty(
                       dateTime: widget.dateTime,
                       jummah: widget.snapshot.jummah1 ?? '') ==

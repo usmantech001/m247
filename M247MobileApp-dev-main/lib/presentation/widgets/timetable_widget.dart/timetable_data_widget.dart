@@ -28,9 +28,7 @@ class TimetableDataWidget extends StatelessWidget {
               children: [
              _EventTile(
                         name: "Sehri",
-                        selected: snapshot.sehriEnd!.isEmpty
-                            ? false
-                            : checkPrayerTime(
+                        selected: checkForNextPrayer(
                                 startTime: '${snapshot.sehriEnd} AM',
                                 endTime: '${snapshot.jamFajr} AM'),
                         endTime1: '- -',
@@ -39,10 +37,7 @@ class TimetableDataWidget extends StatelessWidget {
                       
                 _EventTile(
                   name: "Fajr",
-                  selected:
-                      snapshot.begFajr!.isEmpty || snapshot.jamFajr!.isEmpty
-                          ? false
-                          : checkPrayerTime(
+                  selected: checkForNextPrayer(
                               startTime: '${snapshot.begFajr} AM',
                               endTime: '${snapshot.jamFajr} AM'),
                   endTime1: snapshot.jamFajr,
@@ -50,10 +45,7 @@ class TimetableDataWidget extends StatelessWidget {
                 ),
                 _EventTile(
                   name: "Sunrise",
-                  selected:
-                      snapshot.sunrise!.isEmpty || snapshot.sunset!.isEmpty
-                          ? false
-                          : checkPrayerTime(
+                  selected: checkForNextPrayer(
                               startTime: '${snapshot.sunset} AM',
                               endTime: '${snapshot.sunrise} AM'),
                   endTime1: snapshot.sunrise,
@@ -65,10 +57,7 @@ class TimetableDataWidget extends StatelessWidget {
                         true
                     ? _EventTile(
                         name: "Jummah",
-                        selected: snapshot.jummah2!.isEmpty ||
-                                snapshot.jummah2!.isEmpty
-                            ? false
-                            : checkPrayerTime(
+                        selected: checkForNextPrayer(
                                 startTime: '${snapshot.jummah2} PM',
                                 endTime: '${snapshot.jummah1} PM'),
                         endTime1: checkTheNumberOfJummuah(
@@ -80,10 +69,7 @@ class TimetableDataWidget extends StatelessWidget {
                       )
                     : _EventTile(
                         name: "Dhuhr",
-                        selected: snapshot.begDhuhr!.isEmpty ||
-                                snapshot.jamDhuhr!.isEmpty
-                            ? false
-                            : checkPrayerTime(
+                        selected: checkForNextPrayer(
                                 startTime: '${snapshot.begDhuhr} PM',
                                 endTime: '${snapshot.jamDhuhr} PM'),
                         endTime1: snapshot.jamDhuhr,
@@ -91,10 +77,7 @@ class TimetableDataWidget extends StatelessWidget {
                       ),
                 _EventTile(
                   name: "Asr",
-                  selected:
-                      snapshot.begAsar!.isEmpty || snapshot.jamAsar!.isEmpty
-                          ? false
-                          : checkPrayerTime(
+                  selected: checkForNextPrayer(
                               startTime: '${snapshot.begAsar} PM',
                               endTime: '${snapshot.jamAsar} PM'),
                   endTime1: snapshot.jamAsar,
@@ -102,10 +85,7 @@ class TimetableDataWidget extends StatelessWidget {
                 ),
                 _EventTile(
                   name: "Maghrib",
-                  selected:
-                      snapshot.sunset!.isEmpty || snapshot.jamMaghrib!.isEmpty
-                          ? false
-                          : checkPrayerTime(
+                  selected: checkForNextPrayer(
                               startTime: '${snapshot.sunset} PM',
                               endTime: '${snapshot.jamMaghrib} PM'),
                   endTime1: snapshot.jamMaghrib,
@@ -113,10 +93,7 @@ class TimetableDataWidget extends StatelessWidget {
                 ),
                 _EventTile(
                   name: "Isha",
-                  selected:
-                      snapshot.begEsha!.isEmpty || snapshot.jamEsha!.isEmpty
-                          ? false
-                          : checkPrayerTime(
+                  selected: checkForNextPrayer(
                               startTime: '${snapshot.begEsha} PM',
                               endTime: '${snapshot.jamEsha} PM'),
                   endTime1: snapshot.jamEsha,
