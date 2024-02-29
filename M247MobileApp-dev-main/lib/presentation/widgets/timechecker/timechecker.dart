@@ -32,12 +32,8 @@ bool checkPrayerTime(
 
   return false;
 }
-bool checkForNextPrayer({required String startTime,
-    required String endTime,
-    String eshaEndTime = '',
-    int? index,
-    PageController? pagecontroller}){
-      bool isAtIndex1 = false;
+
+bool isAtIndex1 = false;
       bool isAtIndex2 = false;
       bool isAtIndex3 = false;
       bool isAtIndex4 = false;
@@ -45,6 +41,12 @@ bool checkForNextPrayer({required String startTime,
       bool isAtIndex6 = false;
       bool isAtIndex7 = false;
       bool isAtIndex8 = false;
+bool checkForNextPrayer({required String startTime,
+    required String endTime,
+    String eshaEndTime = '',
+    int? index,
+    PageController? pagecontroller}){
+      
       DateTime now = DateTime.now();
   final nowAMorPM = DateFormat('a').format(now);
   final formattedStartTime = checkForCorrectFormattingStartTime(startTime);
